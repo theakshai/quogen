@@ -1,14 +1,10 @@
 import './App.css'
-import Home from "./pages/Home" 
-import Why from './pages/Why'
-import Pricing from './pages/Pricing'
-import About from './pages/About'
-import Contact from './componets/Contact'
+import SignUp from './pages/SignUp'
 
 function App() {
   return (
     <div className='bg-black'>
-      <Contact/>
+      <SignUp/>
     </div>
   )
 }
