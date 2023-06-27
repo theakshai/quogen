@@ -12,7 +12,7 @@ export default {
       'euclidSemibold':["euclidSemibold"],
     },
     colors:{
-      'qblue':'#20262e',
+      'qblue':'#26262e',
       'qwhite':'#fcf8f2',
     },
     extend: {
