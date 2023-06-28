@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "04RkBUuhYWJ9/lrcvrX5Hs12gS6205SDgCK716SqrxEcA+V+1PHeOlxv/t/u996OVn3Jm+agCkIzHGioYQoVXg==",
+  "dgSpecHash": "9T3YE6gQBwcMi6JSZEo450ThqwWeFqicDMZajJ0kC8OYtDfJKF/LnD23u7bwVA4XstctE7J6xfRZHstDFy3RGQ==",
   "success": true,
-  "projectFilePath": "D:\\quogen\\backend\\backend.csproj",
+  "projectFilePath": "D:\\quogen\\backend\\backend\\backend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Dell\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
