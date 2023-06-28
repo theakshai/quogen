@@ -1,13 +1,13 @@
 ﻿using backend.Data;
+using backend.Services;
+using backend.Models;
 using backend.TypeCheckingModel;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace backend.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -20,6 +20,7 @@ namespace backend.Controllers
            this._context = context;
         }
 
+        [Route("/api/auth")]
         [HttpGet]
         public async Task<ActionResult> Get()
         {
@@ -27,23 +28,25 @@ namespace backend.Controllers
             {
                 try { 
                    var TotalUsers = await _context.Authentications.ToListAsync();
+                    Console.WriteLine(TotalUsers);
                    return Ok(JsonConvert.SerializeObject(TotalUsers)); 
                 }catch(Exception ex)
                 {
-                    return BadRequest(ex.Message);
+                    return StatusCode(500, ex.Message);
                 }
             }
             return Ok("No Users Found");
 
         }
 
-        public async Task<bool> UserExists(string user_id)
+        [NonAction]
+        public async Task<bool> UserExists(string email)
         {
             if(_context is not null)
             {
                 try
                 {
-                    var user = await _context.Users.FindAsync(user_id);
+                    var user = await _context.Users.FindAsync(email);
                     if(user is not null)
                     {
                         return true;
@@ -56,6 +59,111 @@ namespace backend.Controllers
 
             }
             return false;
+        }
+
+        [HttpPost]
+        [Route("api/signup")]
+        public async Task<IActionResult> SigningUp([FromBody] UserAuth user)
+        {
+            if(user is not null) 
+            {
+                if(await UserExists(user.Email)) 
+                {
+                    return Conflict("User/Mail Already Exists");
+
+                }
+                try
+                {
+                    Guid guid = Guid.NewGuid();
+
+                    var Authentication = new Authentication
+                    {
+                        UserId = guid.ToString(),
+                        Password  = user.Password,
+                    };
+
+
+
+                    var User = new User
+                    {
+                        UserId = guid.ToString(),
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Email = user.Email,
+                        Designation = user.Designation,
+                        IsPremium = false,
+                        CreatedAt = DateTime.Now
+                        
+                    };
+
+                    var token = JWTTokenGenerator.CreateToken(user,_configuration!);
+                    var CookieOptions = new CookieOptions();
+                    CookieOptions.Expires = DateTime.Now.AddDays(1);
+                    CookieOptions.Path = "/";
+
+
+                    await _context!.Authentications.AddAsync(Authentication);
+                    await _context!.Users.AddAsync(User);
+                    await _context!.SaveChangesAsync();
+
+                    Response.Cookies.Append("jwt", token, CookieOptions);
+                    return StatusCode(201, "User Created Successfully");
+
+                }catch(Exception e)
+                {
+                    return StatusCode( 500 ,"An unknown internal server error in database" + e.Message);
+                }
+                
+            }
+            return Ok(); 
+        }
+
+        [HttpPost]
+        [Route("/api/login/")]
+        public async Task<IActionResult> Login([FromBody] Login user)
+        {
+            if(user is not null)
+            {
+                if (await UserExists(user.Email))
+                {
+                    return StatusCode(404, "User not Signed in");
+
+                }
+
+            }
+            try
+            {
+                    var token = JWTTokenGenerator.CreateToken(user,_configuration!);
+                    var CookieOptions = new CookieOptions();
+                    CookieOptions.Expires = DateTime.Now.AddDays(1);
+                    CookieOptions.Path = "/";
+                    Response.Cookies.Append("jwt", token, CookieOptions);
+                    return StatusCode(200, "User loggedin successfully");
+
+            }catch(Exception ex)
+            {
+                return StatusCode(500, "Internal error occured in token generation");
+            }
+        }
+
+        [HttpGet]
+        [Route("/api/logout")]
+        public IActionResult Logout()
+        {
+            var cookies = Request.Cookies;
+
+            // Iterate over the cookies and print their values
+            foreach (var cookie in cookies)
+            {
+                if(cookie.Key == "jwt")
+                {
+                    Response.Cookies.Delete("jwt");
+                    Console.WriteLine(cookie.Value);
+                }
+            }
+
+
+            return Ok("Cookie removed");
         }
     }
 }

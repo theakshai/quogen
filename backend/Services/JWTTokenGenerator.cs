@@ -9,7 +9,7 @@ namespace backend.Services
     public class JWTTokenGenerator
     {
 
-        public static dynamic CreateToken(UserAuth? user, IConfiguration configuration)
+        public static dynamic CreateToken(dynamic? user, IConfiguration configuration)
         {
 
             var issuer = configuration["Jwt:Issuer"];
@@ -21,8 +21,7 @@ namespace backend.Services
                                 );
             var subject = new ClaimsIdentity(new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user?.FirstName),
-                new Claim(JwtRegisteredClaimNames.Email, user?.LastName),
+                new Claim(JwtRegisteredClaimNames.Email, user?.Email),
             });
             var expires = DateTime.UtcNow.AddDays(2);
             var tokenDescriptor = new SecurityTokenDescriptor

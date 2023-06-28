@@ -20,6 +20,6 @@ namespace backend.Models
         [Column("isPremium")]
         public bool? IsPremium { get; set; }
         [Column("created_at")]
-        public DateTime? DateTime { get; set; }
+        public DateTime? CreatedAt { get; set; }
     }
 }
