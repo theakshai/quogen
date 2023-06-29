@@ -28,7 +28,6 @@ namespace backend.Controllers
             {
                 try { 
                    var TotalUsers = await _context.Authentications.ToListAsync();
-                    Console.WriteLine(TotalUsers);
                    return Ok(JsonConvert.SerializeObject(TotalUsers)); 
                 }catch(Exception ex)
                 {
@@ -42,13 +41,12 @@ namespace backend.Controllers
         [NonAction]
         public async Task<bool> UserExists(string email)
         {
-            if(_context is not null)
-            {
                 try
                 {
-                    var user = await _context.Users.FindAsync(email);
-                    if(user is not null)
+                    var user = await _context!.Users.FirstOrDefaultAsync(user => user.Email == email);
+                    if(user != null)
                     {
+                        Console.WriteLine("The user is" + user == null);
                         return true;
                     }
 
@@ -56,8 +54,6 @@ namespace backend.Controllers
                 {
                     return false;
                 }
-
-            }
             return false;
         }
 
@@ -67,7 +63,7 @@ namespace backend.Controllers
         {
             if(user is not null) 
             {
-                if(await UserExists(user.Email)) 
+                if(!await UserExists(user!.Email)) 
                 {
                     return Conflict("User/Mail Already Exists");
 
@@ -124,26 +120,31 @@ namespace backend.Controllers
         {
             if(user is not null)
             {
-                if (await UserExists(user.Email))
+                if (!await UserExists(user.Email))
                 {
                     return StatusCode(404, "User not Signed in");
 
                 }
+                else
+                {
+                    try
+                    {
+                        var token = JWTTokenGenerator.CreateToken(user, _configuration!);
+                        var CookieOptions = new CookieOptions();
+                        CookieOptions.Expires = DateTime.Now.AddDays(1);
+                        CookieOptions.Path = "/";
+                        Response.Cookies.Append("jwt", token, CookieOptions);
+                        return StatusCode(200, "User loggedin successfully");
+
+                    }
+                    catch (Exception ex)
+                    {
+                        return StatusCode(500, "Internal error occured in token generation");
+                    }
+                }
 
             }
-            try
-            {
-                    var token = JWTTokenGenerator.CreateToken(user,_configuration!);
-                    var CookieOptions = new CookieOptions();
-                    CookieOptions.Expires = DateTime.Now.AddDays(1);
-                    CookieOptions.Path = "/";
-                    Response.Cookies.Append("jwt", token, CookieOptions);
-                    return StatusCode(200, "User loggedin successfully");
-
-            }catch(Exception ex)
-            {
-                return StatusCode(500, "Internal error occured in token generation");
-            }
+                    return StatusCode(404, "User not Signed in");
         }
 
         [HttpGet]
@@ -165,5 +166,6 @@ namespace backend.Controllers
 
             return Ok("Cookie removed");
         }
+
     }
 }
