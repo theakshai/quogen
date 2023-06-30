@@ -1,4 +1,5 @@
 using backend.Data;
+using backend.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -21,7 +22,8 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidateLifetime = false,
-        ValidateIssuerSigningKey = true
+        ValidateIssuerSigningKey = true,
+        RoleClaimType = "roles"
     };
 });
 builder.Services.AddAuthorization();
@@ -48,6 +50,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseMiddleware<JWTTokenChecker>();
 app.UseAuthentication();
 app.UseAuthorization();
 IConfiguration configuration = app.Configuration;

@@ -9,5 +9,6 @@ namespace backend.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
         public DbSet<Authentication> Authentications { get; set; } 
         public DbSet<User> Users { get; set; } 
+        public DbSet<Organisation> Organisations  { get; set; } 
     }
 }

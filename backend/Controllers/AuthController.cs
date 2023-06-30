@@ -1,10 +1,13 @@
 ﻿using backend.Data;
-using backend.Services;
 using backend.Models;
 using backend.TypeCheckingModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using backend.ControllerHelpers;
+using System.IdentityModel.Tokens.Jwt;
+using backend.Services;
+using backend.Attributes;
 
 namespace backend.Controllers
 {
@@ -13,6 +16,8 @@ namespace backend.Controllers
     {
         public IConfiguration? _configuration;
         public ApplicationDbContext? _context;
+        AuthHelper _authHelper = new AuthHelper();
+        JWTTokenDecoder jWTTokenDecoder = new JWTTokenDecoder();
 
         public AuthController(IConfiguration? configuration, ApplicationDbContext? context)
         {
@@ -38,32 +43,13 @@ namespace backend.Controllers
 
         }
 
-        [NonAction]
-        public async Task<bool> UserExists(string email)
-        {
-                try
-                {
-                    var user = await _context!.Users.FirstOrDefaultAsync(user => user.Email == email);
-                    if(user != null)
-                    {
-                        Console.WriteLine("The user is" + user == null);
-                        return true;
-                    }
-
-                }catch(Exception ex)
-                {
-                    return false;
-                }
-            return false;
-        }
-
         [HttpPost]
         [Route("api/signup")]
-        public async Task<IActionResult> SigningUp([FromBody] UserAuth user)
+        public async Task<IActionResult> SigningUp([FromBody] TUserAuth user)
         {
             if(user is not null) 
             {
-                if(!await UserExists(user!.Email)) 
+                if(await _authHelper!.UserExists(user?.Email, _context!)) 
                 {
                     return Conflict("User/Mail Already Exists");
 
@@ -92,7 +78,7 @@ namespace backend.Controllers
                         
                     };
 
-                    var token = JWTTokenGenerator.CreateToken(user,_configuration!);
+                    var token = JWTTokenGenerator.CreateToken(guid.ToString(),user,_configuration!);
                     var CookieOptions = new CookieOptions();
                     CookieOptions.Expires = DateTime.Now.AddDays(1);
                     CookieOptions.Path = "/";
@@ -116,11 +102,11 @@ namespace backend.Controllers
 
         [HttpPost]
         [Route("/api/login/")]
-        public async Task<IActionResult> Login([FromBody] Login user)
+        public async Task<IActionResult> Login([FromBody] TLogin user)
         {
             if(user is not null)
             {
-                if (!await UserExists(user.Email))
+                if (!await _authHelper!.UserExists(user.Email, _context!))
                 {
                     return StatusCode(404, "User not Signed in");
 
@@ -129,17 +115,25 @@ namespace backend.Controllers
                 {
                     try
                     {
-                        var token = JWTTokenGenerator.CreateToken(user, _configuration!);
-                        var CookieOptions = new CookieOptions();
-                        CookieOptions.Expires = DateTime.Now.AddDays(1);
-                        CookieOptions.Path = "/";
-                        Response.Cookies.Append("jwt", token, CookieOptions);
-                        return StatusCode(200, "User loggedin successfully");
+                        var UserId = await _authHelper.GetUserId(user.Email, _context);
+                        if (UserId != null)
+                        {
+                            var token = JWTTokenGenerator.CreateToken(UserId, user, _configuration!);
+                            var CookieOptions = new CookieOptions();
+                            CookieOptions.Expires = DateTime.Now.AddDays(1);
+                            CookieOptions.Path = "/";
+                            Response.Cookies.Append("jwt", token, CookieOptions);
+                            return StatusCode(200, "User loggedin successfully");
+                        }
+                        else
+                        {
+                            return StatusCode(500, "Internal error occured in token generation. See logs for more information.");
+                        }
 
                     }
                     catch (Exception ex)
                     {
-                        return StatusCode(500, "Internal error occured in token generation");
+                        return StatusCode(500, "Internal error occured in token generation. See logs for more information.");
                     }
                 }
 
@@ -149,17 +143,21 @@ namespace backend.Controllers
 
         [HttpGet]
         [Route("/api/logout")]
+        [CustomAuth("admin")]
         public IActionResult Logout()
         {
             var cookies = Request.Cookies;
 
-            // Iterate over the cookies and print their values
             foreach (var cookie in cookies)
             {
                 if(cookie.Key == "jwt")
                 {
+                    string value = cookie.Value;
+                    Tuple<JwtHeader,JwtPayload> result = jWTTokenDecoder.TokenDecoder(value);
+                    JwtPayload payload =result.Item2;
+                    Console.WriteLine(payload["role"]);
+
                     Response.Cookies.Delete("jwt");
-                    Console.WriteLine(cookie.Value);
                 }
             }
 
