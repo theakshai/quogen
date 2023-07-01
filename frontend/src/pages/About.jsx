@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import Stats from '../componets/Stats';
+import Stats from '../components/Stats';
 
 const About = () => {
     return(

@@ -1,11 +1,10 @@
 import './App.css'
-import SignUp from './pages/SignUp'
-import Login from './pages/Login'
+import Quotation from './components/Quotation/Quotation'
 
 function App() {
   return (
     <div className='bg-black'>
-      <SignUp/>
+      <Quotation/>
     </div>
   )
 }
