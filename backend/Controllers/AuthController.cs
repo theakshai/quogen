@@ -43,8 +43,7 @@ namespace backend.Controllers
 
         }
 
-        [HttpPost]
-        [Route("api/signup")]
+        [HttpPost("/api/signup")]
         public async Task<IActionResult> SigningUp([FromBody] TUserAuth user)
         {
             if(user is not null) 
@@ -100,8 +99,7 @@ namespace backend.Controllers
             return Ok(); 
         }
 
-        [HttpPost]
-        [Route("/api/login/")]
+        [HttpPost("/api/login")]
         public async Task<IActionResult> Login([FromBody] TLogin user)
         {
             if(user is not null)
@@ -122,6 +120,7 @@ namespace backend.Controllers
                             var CookieOptions = new CookieOptions();
                             CookieOptions.Expires = DateTime.Now.AddDays(1);
                             CookieOptions.Path = "/";
+                            CookieOptions.HttpOnly = true;
                             Response.Cookies.Append("jwt", token, CookieOptions);
                             return StatusCode(200, "User loggedin successfully");
                         }
@@ -141,9 +140,8 @@ namespace backend.Controllers
                     return StatusCode(404, "User not Signed in");
         }
 
-        [HttpGet]
-        [Route("/api/logout")]
-        [CustomAuth("admin")]
+        [HttpGet("/api/logout")]
+        [CustomAuth("user")]
         public IActionResult Logout()
         {
             var cookies = Request.Cookies;

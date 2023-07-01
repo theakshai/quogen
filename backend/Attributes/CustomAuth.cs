@@ -18,7 +18,13 @@ namespace backend.Attributes
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             var token = context.HttpContext.Request.Cookies["jwt"];
-
+            if(token == null)
+            {
+                context.Result = new StatusCodeResult(StatusCodes.Status403Forbidden);
+                return;
+            }
+            else
+            {
             JWTTokenDecoder jwtTokenDecoder = new JWTTokenDecoder();
             Tuple<JwtHeader, JwtPayload> result = jwtTokenDecoder.TokenDecoder(token);
             var Payload = result.Item2;
@@ -38,6 +44,8 @@ namespace backend.Attributes
                 context.Result = new StatusCodeResult(StatusCodes.Status403Forbidden);
                 return;
             }
+            }
+
         }
     }
 }

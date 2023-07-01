@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backend.Data;
 
@@ -11,9 +12,11 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230701134559_init4")]
+    partial class init4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,25 +38,6 @@ namespace backend.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Authentications");
-                });
-
-            modelBuilder.Entity("backend.Models.Client", b =>
-                {
-                    b.Property<string>("client_id")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("client_id");
-
-                    b.Property<string>("ClientAddress")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("client_address");
-
-                    b.Property<string>("ClientName")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("client_name");
-
-                    b.HasKey("client_id");
-
-                    b.ToTable("Clients");
                 });
 
             modelBuilder.Entity("backend.Models.Organisation", b =>
@@ -89,33 +73,6 @@ namespace backend.Migrations
                     b.HasKey("OrganistationId");
 
                     b.ToTable("Organisations");
-                });
-
-            modelBuilder.Entity("backend.Models.Quotation", b =>
-                {
-                    b.Property<string>("QuotationId")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("quotation_id");
-
-                    b.Property<string>("ClientId")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("client_id");
-
-                    b.Property<DateTime?>("CreateAt")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("created_at");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("created_by");
-
-                    b.Property<int?>("TotalCost")
-                        .HasColumnType("int")
-                        .HasColumnName("total_cost");
-
-                    b.HasKey("QuotationId");
-
-                    b.ToTable("Quotations");
                 });
 
             modelBuilder.Entity("backend.Models.Service", b =>

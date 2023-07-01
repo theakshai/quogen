@@ -8,9 +8,13 @@ namespace backend.Services
     {
         public Tuple<JwtHeader?,JwtPayload?> TokenDecoder(string? token)
         {
+            if(token is not null)
+            {
              JwtSecurityTokenHandler Handler = new JwtSecurityTokenHandler();
              JwtSecurityToken DecodedToken = Handler.ReadJwtToken(token);
              return Tuple.Create(DecodedToken.Header, DecodedToken.Payload) ;
+            }
+            return null;
         }
 
     }

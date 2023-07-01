@@ -1,10 +1,12 @@
 ﻿using backend.Data;
 using backend.Models;
+using backend.Services;
 using backend.TypeCheckingModel;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using backend.Attributes;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace backend.Controllers
 {
@@ -13,6 +15,7 @@ namespace backend.Controllers
     {
         public IConfiguration? _configuration;
         public ApplicationDbContext? _context;
+        JWTTokenDecoder jWTTokenDecoder = new JWTTokenDecoder();
 
         public OrganisationController(IConfiguration? configuration, ApplicationDbContext? context)
         {
@@ -42,8 +45,25 @@ namespace backend.Controllers
 
         [HttpGet]
         [Route("/api/organisation/{id}")]
-        public async Task<IActionResult> GetById()
+        public async Task<IActionResult> GetById(string? id)
         {
+            if(id is not null)
+            {
+                try
+                {
+                    var Organisation = await _context.Organisations.FirstOrDefaultAsync(o => o.OrganistationId == id); 
+                    if(Organisation == null)
+                    {
+                        return StatusCode(400, "Organisation Not Found");
+                    }
+                    return Ok(JsonConvert.SerializeObject(Organisation));
+                }catch(Exception ex)
+                {
+                    return StatusCode(500, "Internal Server Error");
+                }
+
+            }
+
             return StatusCode(404, "Organisation Not Found");
         }
 
@@ -70,12 +90,13 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        [Route("/api/organisation/create")]
+        [Route("/api/organisation/")]
+        [CustomAuth("admin")]
         public async Task<IActionResult> Create([FromBody] TOrganisation organisation)
         {
             if(organisation is not null)
             {
-                if(await OrganisationExists(organisation?.OrganisationName))
+                if(await OrganisationExists(organisation?.OrganisationName!))
                 {
                     return StatusCode(409, "Organisation Name already Exists");
                 }
@@ -83,7 +104,22 @@ namespace backend.Controllers
                 {
                     try
                     {
+                        var cookies = Request.Cookies;
+                        var UserId = "";
+
+                        foreach (var cookie in cookies)
+                        {
+                            if(cookie.Key == "jwt")
+                            {
+                                string value = cookie.Value;
+                                Tuple<JwtHeader,JwtPayload> result = jWTTokenDecoder.TokenDecoder(value);
+                                JwtPayload payload =result.Item2;
+                                UserId = payload["UserId"].ToString();
+
+                            }
+                        }
                         Guid guid = Guid.NewGuid();
+
                         var Organisation = new Organisation
                         {
                             OrganistationId = guid.ToString(),
@@ -91,7 +127,7 @@ namespace backend.Controllers
                             Address = organisation.Address,
                             About = organisation.About,
                             TermsAndCondition = organisation.TermsAndCondition,
-                            CreatedBy = "akshai",
+                            CreatedBy = UserId,
                             CreatedAt = DateTime.Now,
 
                         };
@@ -118,8 +154,27 @@ namespace backend.Controllers
 
         [HttpDelete]
         [Route("/api/organisation/{id}")]
-        public async Task<IActionResult> DelelteOrganistaion()
+        public async Task<IActionResult> DelelteOrganistaion(string? id)
         {
+            if(id is not null)
+            {
+                try
+                {
+                    var Organisation = await _context.Organisations.FirstOrDefaultAsync(o => o.OrganistationId == id); 
+                    if(Organisation == null)
+                    {
+                        return StatusCode(400, "Organisation Not Found");
+                    }
+                     _context.Organisations.Remove(Organisation);
+                    await _context.SaveChangesAsync();
+                    return StatusCode(204, "Organisation Deleted Successfully");
+                }catch(Exception ex)
+                {
+                    return StatusCode(500, "Internal Server Error");
+                }
+
+            }
+
             return StatusCode(409, "Unable to delete Organisation");
         }
 

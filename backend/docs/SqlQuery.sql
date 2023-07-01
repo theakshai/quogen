@@ -24,3 +24,9 @@ create Table Organisations(
 	created_at datetime,
 	foreign key (created_by) references Users (user_id) on delete cascade
 )
+
+create table Services(
+	service_id varchar(50) primary key not null,
+	service_name varchar(200),
+	cost int,
+	)
