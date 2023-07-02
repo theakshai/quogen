@@ -1,10 +1,10 @@
 import './App.css'
-import Quotation from './components/Quotation/Quotation'
+import QuotationForms from './pages/QuotationForms'
 
 function App() {
   return (
     <div className='bg-black'>
-      <Quotation/>
+      <QuotationForms/>
     </div>
   )
 }
