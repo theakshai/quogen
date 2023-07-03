@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import LoginForm from '../componets/LoginForm';
+import LoginForm from '../components/LoginForm';
 
 const Login = () => {
     return (

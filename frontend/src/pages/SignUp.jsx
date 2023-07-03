@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import SignUpForm from '../componets/SignUpForm';
+import SignUpForm from '../components/SignUpForm';
 
 const SignUp = () => {
     return (
