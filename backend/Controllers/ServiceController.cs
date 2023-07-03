@@ -33,7 +33,7 @@ namespace backend.Controllers
                 try
                 {
                  var Services = await _context.Services.ToListAsync();
-                 return Ok(JsonConvert.SerializeObject(Services));
+                 return Ok(Services);
                 }catch(Exception ex)
                 {
                  return StatusCode(500, "Internal Server Error.");
@@ -75,7 +75,57 @@ namespace backend.Controllers
                 }
             }
 
-            return StatusCode(409, "Service Exist already");
+
+        }
+
+        [HttpDelete("/api/service/{id}")]
+        [CustomAuth("admin")]
+        public async Task<IActionResult> Delete(string? id)
+        {
+
+            if(id is not null)
+            {
+                try {
+                    var Service = await _context.Services.FirstOrDefaultAsync(s => s.ServiceId == id); 
+                    if(Service == null)
+                    {
+                        return StatusCode(400, "Service Not Found");
+                    }
+                     _context.Services.Remove(Service);
+                    await _context.SaveChangesAsync();
+                    return StatusCode(204, "Service Deleted Successfully");
+                }catch(Exception ex)
+                {
+                    return StatusCode(500, "Internal Server Error");
+                }
+
+            }
+
+            return StatusCode(409, "Unable to delete Service");
+        }
+
+        [HttpPatch("/api/service/{id}")]
+        [CustomAuth("admin")]
+
+        public async Task<IActionResult> Update(string? id, [FromBody] TService service)
+        {
+            if(id is not null)
+            {
+                try {
+                    var ExistingService = await _context.Services.FirstOrDefaultAsync(s => s.ServiceId == id);
+                    if(ExistingService is not null)
+                    {
+                        ExistingService.ServiceName = service.ServiceName;
+                        ExistingService.Cost = service.Cost;
+                    }
+                    await _context.SaveChangesAsync();
+                    return Ok("Service Updated Successfully");
+                }catch(Exception ex)
+                {
+                    return StatusCode(500, "Internal Server Error");
+                }
+            }
+            return Ok("Service has been updated");
 
         }
 

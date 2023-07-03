@@ -39,19 +39,27 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.Client", b =>
                 {
-                    b.Property<string>("client_id")
+                    b.Property<string>("Client_id")
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("client_id");
 
-                    b.Property<string>("ClientAddress")
+                    b.Property<string>("ClientEmail")
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("client_address");
+                        .HasColumnName("client_email");
+
+                    b.Property<string>("ClientMobile")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("client_mobile");
 
                     b.Property<string>("ClientName")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("client_name");
 
-                    b.HasKey("client_id");
+                    b.Property<string>("ClientState")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("client_state");
+
+                    b.HasKey("Client_id");
 
                     b.ToTable("Clients");
                 });
@@ -66,10 +74,6 @@ namespace backend.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("about");
 
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("address");
-
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("created_at");
@@ -77,6 +81,14 @@ namespace backend.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("created_by");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("email");
+
+                    b.Property<string>("Mobile")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("mobile");
 
                     b.Property<string>("OrganisationName")
                         .HasColumnType("nvarchar(max)")
@@ -101,7 +113,7 @@ namespace backend.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("client_id");
 
-                    b.Property<DateTime?>("CreateAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("created_at");
 

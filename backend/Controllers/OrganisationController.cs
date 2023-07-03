@@ -33,7 +33,7 @@ namespace backend.Controllers
                 try
                 {
                     var Organistaion = await _context.Organisations.ToListAsync();
-                    return Ok(JsonConvert.SerializeObject(Organistaion));
+                    return Ok(Organistaion);
                 }catch(Exception ex)
                 {
                     return StatusCode(500, "Internal Server error in database. See logs for more details");
@@ -56,7 +56,7 @@ namespace backend.Controllers
                     {
                         return StatusCode(400, "Organisation Not Found");
                     }
-                    return Ok(JsonConvert.SerializeObject(Organisation));
+                    return Ok(Organisation);
                 }catch(Exception ex)
                 {
                     return StatusCode(500, "Internal Server Error");
@@ -124,7 +124,8 @@ namespace backend.Controllers
                         {
                             OrganistationId = guid.ToString(),
                             OrganisationName = organisation.OrganisationName,
-                            Address = organisation.Address,
+                            Email = organisation.Email,
+                            Mobile = organisation.Mobile,
                             About = organisation.About,
                             TermsAndCondition = organisation.TermsAndCondition,
                             CreatedBy = UserId,

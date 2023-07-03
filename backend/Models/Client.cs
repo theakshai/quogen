@@ -7,10 +7,14 @@ namespace backend.Models
     {
         [Key]
         [Column("client_id")]
-        public string? client_id { get; set; }
+        public string? Client_id { get; set; }
         [Column("client_name")]
         public string? ClientName { get; set; }
-        [Column("client_address")]
-        public string? ClientAddress { get; set; }
+        [Column("client_email")]
+        public string? ClientEmail { get; set; }
+        [Column("client_mobile")]
+        public string? ClientMobile { get; set; }
+        [Column("client_state")]
+        public string? ClientState { get; set; }
     }
 }

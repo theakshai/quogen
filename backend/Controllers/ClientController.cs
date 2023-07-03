@@ -29,7 +29,7 @@ namespace backend.Controllers
                 {
                     return StatusCode(400, "No Clients Found");
                 }
-                return Ok(JsonConvert.SerializeObject(Clients));
+                return Ok(Clients);
             }catch(Exception ex)
             {
                 return StatusCode(500, "Internal Server error");

@@ -11,8 +11,10 @@ namespace backend.Models
         public string? OrganistationId { get; set; }
         [Column("organisation_name")]
         public string? OrganisationName { get; set; }
-        [Column("address")]
-        public string? Address { get; set; }
+        [Column("email")]
+        public string? Email { get; set; }
+        [Column("mobile")]
+        public string? Mobile { get; set; }
         [Column("about")]
         public string? About { get; set; }
         [Column("terms_and_condition")]

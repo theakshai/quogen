@@ -33,7 +33,7 @@ namespace backend.Controllers
             {
                 try { 
                    var TotalUsers = await _context.Authentications.ToListAsync();
-                   return Ok(JsonConvert.SerializeObject(TotalUsers)); 
+                   return Ok(TotalUsers); 
                 }catch(Exception ex)
                 {
                     return StatusCode(500, ex.Message);
