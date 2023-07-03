@@ -1,11 +1,12 @@
 import React, { Fragment } from "react";
+import { Link } from "react-router-dom";
 import arrow from "../assets/right-arrow.png"
 
 const Button = ({action, url}) => {
     return (
         <Fragment>
             <div className='inline-flex gap-2'>
-            <a href={url} className='font-euclidRegular text-qwhite hover:underline'> {action} </a>
+                <Link to={'/login'} className="font-euclidRegular text-qwhite">{action}</Link>
                 <img width="20" height="10" src={arrow} alt="long-arrow-right"/>
             </div>
         
