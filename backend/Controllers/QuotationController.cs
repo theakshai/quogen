@@ -8,6 +8,7 @@ using backend.Models;
 using Microsoft.VisualBasic;
 using System.IdentityModel.Tokens.Jwt;
 using backend.Services;
+using backend.ControllerHelpers;
 
 namespace backend.Controllers
 {
@@ -17,6 +18,8 @@ namespace backend.Controllers
     {
         public IConfiguration _configuration { get; set; }
         public ApplicationDbContext _context { get; set; }
+
+        ResponseAction _response = new ResponseAction();
 
         JWTTokenDecoder jWTTokenDecoder = new JWTTokenDecoder();
 
@@ -40,13 +43,12 @@ namespace backend.Controllers
                      return Ok("No Quotations");
             }catch(Exception e)
             {
-                     return StatusCode(500, "Internal Server Error");
+                return _response.InternalServerError() ;
             }
 
         }
 
         [HttpPost("/api/quotation")]
-        [CustomAuth("admin")]
 
         public async Task<IActionResult> Create([FromBody] TClientQuotation quotation)
         {
@@ -97,11 +99,11 @@ namespace backend.Controllers
 
                 }catch(Exception e)
                 {
-                    return StatusCode(500, "Internall Server Error in Database");
+                    return _response.InternalServerError();
                 }
             }
 
-            return StatusCode(409, "Unable to create Quotation");
+            return _response.Conflict();
 
         }
 

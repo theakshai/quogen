@@ -1,8 +1,7 @@
 ﻿using backend.Data;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
+using backend.ControllerHelpers;
 
 namespace backend.Controllers
 {
@@ -12,6 +11,8 @@ namespace backend.Controllers
 
         public IConfiguration _configuration { get; set; }
         public ApplicationDbContext _context { get; set; }
+
+        ResponseAction _response = new ResponseAction();
 
         public ClientController(IConfiguration configuration, ApplicationDbContext context)
         {
@@ -27,12 +28,12 @@ namespace backend.Controllers
                 var Clients = await _context.Clients.ToListAsync();
                 if(Clients is null)
                 {
-                    return StatusCode(400, "No Clients Found");
+                    return _response.NotFound("No Clients Found");
                 }
                 return Ok(Clients);
             }catch(Exception ex)
             {
-                return StatusCode(500, "Internal Server error");
+                return _response.InternalServerError();
 
             }
         }

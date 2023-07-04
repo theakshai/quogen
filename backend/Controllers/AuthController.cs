@@ -3,7 +3,6 @@ using backend.Models;
 using backend.TypeCheckingModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using backend.ControllerHelpers;
 using System.IdentityModel.Tokens.Jwt;
 using backend.Services;
@@ -17,6 +16,7 @@ namespace backend.Controllers
         public IConfiguration? _configuration;
         public ApplicationDbContext? _context;
         AuthHelper _authHelper = new AuthHelper();
+        ResponseAction _response = new ResponseAction();
         JWTTokenDecoder jWTTokenDecoder = new JWTTokenDecoder();
 
         public AuthController(IConfiguration? configuration, ApplicationDbContext? context)
@@ -29,17 +29,25 @@ namespace backend.Controllers
         [HttpGet]
         public async Task<ActionResult> Get()
         {
-            if(_context is not null)
+            if (_context is not null)
             {
-                try { 
-                   var TotalUsers = await _context.Authentications.ToListAsync();
-                   return Ok(TotalUsers); 
-                }catch(Exception ex)
+
+                try
                 {
-                    return StatusCode(500, ex.Message);
+                    var TotalUsers = await _context.Authentications.ToListAsync();
+                    if(TotalUsers is not null)
+                    {
+                        return Ok(TotalUsers);
+                    }
+                    return _response.OK("No Users Found");
+                }catch(Exception e)
+                {
+                    return _response.InternalServerError();
+
                 }
+
             }
-            return Ok("No Users Found");
+                    return Ok("No Users Found");
 
         }
 
@@ -78,21 +86,15 @@ namespace backend.Controllers
                     };
 
                     var token = JWTTokenGenerator.CreateToken(guid.ToString(),user,_configuration!);
-                    var CookieOptions = new CookieOptions();
-                    CookieOptions.Expires = DateTime.Now.AddDays(1);
-                    CookieOptions.Path = "/";
-
-
                     await _context!.Authentications.AddAsync(Authentication);
                     await _context!.Users.AddAsync(User);
                     await _context!.SaveChangesAsync();
-
-                    Response.Cookies.Append("jwt", token, CookieOptions);
-                    return StatusCode(201, "User Created Successfully");
+                    Response.Headers.Add("Authorization", "Bearer " + token);
+                    return _response.ResourceCreated("User Created Succesfully");
 
                 }catch(Exception e)
                 {
-                    return StatusCode( 500 ,"An unknown internal server error in database" + e.Message);
+                    return _response.InternalServerError();
                 }
                 
             }
@@ -117,27 +119,22 @@ namespace backend.Controllers
                         if (UserId != null)
                         {
                             var token = JWTTokenGenerator.CreateToken(UserId, user, _configuration!);
-                            var CookieOptions = new CookieOptions();
-                            CookieOptions.Expires = DateTime.Now.AddDays(1);
-                            CookieOptions.Path = "/";
-                            CookieOptions.HttpOnly = true;
-                            Response.Cookies.Append("jwt", token, CookieOptions);
-                            return StatusCode(200, "User loggedin successfully");
-                        }
-                        else
-                        {
-                            return StatusCode(500, "Internal error occured in token generation. See logs for more information.");
-                        }
+                            Response.Headers.Add("Authorization", "Bearer " + token);
 
+
+                            return _response.OK("User Logged in Successfully");
+
+                        }
+                        return _response.NotFound("User not found.");
                     }
                     catch (Exception ex)
                     {
-                        return StatusCode(500, "Internal error occured in token generation. See logs for more information.");
+                        return _response.InternalServerError();
                     }
                 }
 
             }
-                    return StatusCode(404, "User not Signed in");
+                    return _response.NotFound("User not found");
         }
 
         [HttpGet("/api/logout")]

@@ -1,5 +1,4 @@
-﻿
-using System.Web;
+﻿using Microsoft.IdentityModel.Tokens;
 
 namespace backend.Middleware
 {
@@ -14,13 +13,13 @@ namespace backend.Middleware
 
         public async Task InvokeAsync(HttpContext context)
         {
-            var token = context.Request.Cookies["jwt"];
 
-            /* To print headers for debugging
-            IEnumerable<string> keyValues = context.Request.Headers.Keys.Select(key => key + ": " + string.Join(",", context.Request.Headers[key]));
-            string requestHeaders = string.Join(System.Environment.NewLine, keyValues);
-            Console.WriteLine(requestHeaders);
-            */
+            string token = null;  
+            if(context.Request.Headers.TryGetValue("authorization", out var authorizationHeader))
+            {
+                 token = authorizationHeader.ToString().Replace("Bearer", "");
+                Console.WriteLine(token);
+            }
 
 
             context.Items["jwt"] = token;

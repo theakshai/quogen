@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using backend.Attributes;
 using System.IdentityModel.Tokens.Jwt;
+using backend.ControllerHelpers;
 
 namespace backend.Controllers
 {
@@ -15,6 +16,7 @@ namespace backend.Controllers
     {
         public IConfiguration? _configuration;
         public ApplicationDbContext? _context;
+        ResponseAction _response = new ResponseAction();
         JWTTokenDecoder jWTTokenDecoder = new JWTTokenDecoder();
 
         public OrganisationController(IConfiguration? configuration, ApplicationDbContext? context)
@@ -36,10 +38,10 @@ namespace backend.Controllers
                     return Ok(Organistaion);
                 }catch(Exception ex)
                 {
-                    return StatusCode(500, "Internal Server error in database. See logs for more details");
+                    return _response.InternalServerError();
                 }
             }
-            return StatusCode(400, "Organistaion Not found");
+            return _response.NotFound("Organisation not Found");
         }
 
 
@@ -52,14 +54,14 @@ namespace backend.Controllers
                 try
                 {
                     var Organisation = await _context.Organisations.FirstOrDefaultAsync(o => o.OrganistationId == id); 
-                    if(Organisation == null)
+                    if(Organisation is null)
                     {
-                        return StatusCode(400, "Organisation Not Found");
+                        return _response.NotFound("No Organisation have the id "+id);
                     }
                     return Ok(Organisation);
                 }catch(Exception ex)
                 {
-                    return StatusCode(500, "Internal Server Error");
+                   return _response.InternalServerError();
                 }
 
             }
@@ -98,7 +100,7 @@ namespace backend.Controllers
             {
                 if(await OrganisationExists(organisation?.OrganisationName!))
                 {
-                    return StatusCode(409, "Organisation Name already Exists");
+                    return _response.Conflict();
                 }
                 else
                 {
@@ -134,16 +136,16 @@ namespace backend.Controllers
                         };
                             await _context!.Organisations.AddAsync(Organisation);
                             await _context.SaveChangesAsync();
-                            return Ok("Organisation Created Successfully");
+                            return _response.OK("Organisation Created Successfully");
 
                     }catch(Exception e)
                     {
-                        return StatusCode(500, "Unable to create Organisation. See logs for more information");
+                        return _response.InternalServerError();
                     }
                 }
             }
 
-            return StatusCode(409, "Unable to create Organisation. See logs for more details");
+            return _response.Conflict();
         }
 
         [HttpPost]
@@ -164,11 +166,11 @@ namespace backend.Controllers
                     var Organisation = await _context.Organisations.FirstOrDefaultAsync(o => o.OrganistationId == id); 
                     if(Organisation == null)
                     {
-                        return StatusCode(400, "Organisation Not Found");
+                        return _response.NotFound("Organisation Not found");
                     }
                      _context.Organisations.Remove(Organisation);
                     await _context.SaveChangesAsync();
-                    return StatusCode(204, "Organisation Deleted Successfully");
+                    return _response.ResourceDeleted("Organisation Deleted Successfully");
                 }catch(Exception ex)
                 {
                     return StatusCode(500, "Internal Server Error");
