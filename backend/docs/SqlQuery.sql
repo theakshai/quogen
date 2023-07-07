@@ -1,6 +1,6 @@
 CREATE TABLE Authentications (
     user_id varchar(50) primary key not null,
-    password varchar(50)
+    password varchar(500)
 );
 
 CREATE TABLE Users (
@@ -9,7 +9,6 @@ CREATE TABLE Users (
     last_name varchar(50),
     email varchar(50),
     designation varchar(50),
-    isPremium bit,
     created_at datetime,
     foreign key (user_id) references Authentications(user_id) on delete cascade
 );
@@ -19,48 +18,65 @@ create Table Organisations(
 	organisation_name varchar(100),
 	email varchar(50),
 	mobile varchar(50),
-	about Text,
-	terms_and_condition Text,
+	about varchar(50),
 	created_by varchar(50),
 	created_at datetime,
 	foreign key (created_by) references Users (user_id) on delete cascade
 )
 
-create table Services(
-	service_id varchar(50) primary key not null,
-	service_name varchar(200),
-	cost int,
-	)
 
 create table Clients(
-	client_id varchar(50) primary key not null,
+	client_id varchar(50)  primary key not null,
 	client_name varchar(100),
 	client_email varchar(50) unique not null,
 	client_mobile varchar(50),
 	client_state varchar(50)
 )
 
+create table Senders(
+	sender_id varchar(50)  primary key not null,
+	sender_name varchar(100),
+	sender_email varchar(50) unique not null,
+	sender_mobile varchar(50),
+	sender_state varchar(50)
+	)
+
 create table Quotations(
-	quotation_id varchar(50) primary key not null,
+	quotation_id varchar(50)  primary key not null,
+	confirmed bit,
 	created_at datetime,
 	created_by varchar(50),
 	total_cost int,
+	service nvarchar(max),
 	client_id varchar(50),
+	sender_id varchar(50),
 	foreign key(client_id) references Clients(client_id) on delete cascade,
+	foreign key(sender_id) references Senders(sender_id) on delete cascade,
 	foreign key(created_by) references Users(user_id) on delete set null
 )
 
-create table QuotationServiceMappings(
-	quotation_id varchar(50),
-	service_id varchar(50),
-	foreign key (quotation_id) references Quotations(quotation_id) on delete cascade,
-	foreign key (service_id) references Services(service_id) on delete set null,
-)
-
 create table UserOrganisationMappings(
+	 id int primary key identity,
 	user_id varchar(50),
 	organisation_id varchar(50),
-	foreign key (user_id) references Users(user_id),
-	foreign key (organisation_id) references Organisations(organisation_id),
+	foreign key (user_id) references Users(user_id) ,
+	foreign key (organisation_id) references Organisations(organisation_id) ,
 	)
 
+delete from UserOrganisationMappings
+delete from Users
+delete from Authentications
+delete from Organisations
+delete from Quotations
+delete from Senders
+delete from Clients
+
+drop table UserOrganisationMappings
+drop table Users
+drop table Organisations
+drop table Clients
+drop table Senders
+drop table Authentications
+drop table Quotations
+
+select * from Quotations

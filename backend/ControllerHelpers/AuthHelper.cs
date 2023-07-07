@@ -41,6 +41,29 @@ namespace backend.ControllerHelpers
 
 
         }
+        public async  Task<string?> GetPassword(string? userId, ApplicationDbContext _context)
+        {
+            if(userId is not null)
+            {
+            try
+            {
+                var User = await _context.Authentications.FirstOrDefaultAsync(user => user.UserId == userId);
+                if(User != null)
+                {
+                    return User.Password;
+                }
+
+            }catch(Exception e)
+            {
+                Console.WriteLine("Error in retreiving UserId. See logs for more information");
+                return null;
+            }
+            }
+                return null;
+
+
+        }
+
 
     }
 }

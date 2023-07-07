@@ -1,11 +1,9 @@
 ﻿using backend.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using backend.Attributes;
 using backend.TypeCheckingModel;
 using backend.Models;
-using Microsoft.VisualBasic;
 using System.IdentityModel.Tokens.Jwt;
 using backend.Services;
 using backend.ControllerHelpers;
@@ -22,6 +20,7 @@ namespace backend.Controllers
         ResponseAction _response = new ResponseAction();
 
         JWTTokenDecoder jWTTokenDecoder = new JWTTokenDecoder();
+        JWTToken _token = new JWTToken();
 
         public QuotationController(IConfiguration configuration, ApplicationDbContext context)
         {
@@ -43,12 +42,13 @@ namespace backend.Controllers
                      return Ok("No Quotations");
             }catch(Exception e)
             {
-                return _response.InternalServerError() ;
+                     return StatusCode(500, "Internal Server Error");
             }
 
         }
 
         [HttpPost("/api/quotation")]
+        [CustomAuth("akkshai")]
 
         public async Task<IActionResult> Create([FromBody] TClientQuotation quotation)
         {
@@ -65,40 +65,52 @@ namespace backend.Controllers
                         ClientMobile = quotation.ClientMobile,
                         ClientState = quotation.ClientState
                     };
-                    await _context.Clients.AddAsync(Client);
+                     await _context.Clients.AddAsync(Client);
 
-                        var cookies = Request.Cookies;
-                        var UserId = "";
 
-                        foreach (var cookie in cookies)
-                        {
-                            if(cookie.Key == "jwt")
-                            {
-                                string value = cookie.Value;
-                                Tuple<JwtHeader,JwtPayload> result = jWTTokenDecoder.TokenDecoder(value);
-                                JwtPayload payload =result.Item2;
-                                UserId = payload["UserId"].ToString();
+                    string value = _token.GetToken(HttpContext);
+                    Tuple<JwtHeader,JwtPayload> result = jWTTokenDecoder.TokenDecoder(value);
+                    JwtPayload payload =result.Item2;
+                    var UserId = payload["UserId"].ToString();
 
-                            }
-                        }
+
+                    Guid _SenderId = Guid.NewGuid();
+
+                    var Sender = new Sender
+                    {
+                        SenderId = _SenderId.ToString(),
+                        SenderName = quotation.SenderName,
+                        SenderEmail = quotation.SenderEmail,
+                        SenderMobile = quotation.SenderEmail,
+                        SenderState = quotation.SenderState
+                    };
+                     await _context.Senders.AddAsync(Sender);
+                     await _context.SaveChangesAsync();
+
+                    Console.WriteLine("success servuce and client");
+
                     Guid _QuotationId = Guid.NewGuid();
                     var Quotation = new Quotation
                     {
                         QuotationId = _QuotationId.ToString(),
+                        Confirmed = 0,
                         CreatedAt = DateTime.Now,
                         CreatedBy = UserId,
                         TotalCost = quotation.TotalCost,
+                        Service = quotation.Service,
                         ClientId = _ClientId.ToString(),
+                        SenderId = _SenderId.ToString(),
 
                     };
 
-                    await _context.Quotations.AddAsync(Quotation);
-
+                    await _context.Quotations.AddAsync(Quotation); 
                     await _context.SaveChangesAsync();
                     return Ok("Quotation Created Successfully");
 
                 }catch(Exception e)
                 {
+                    Console.WriteLine("this is after last");
+                    Console.WriteLine(e.Message);
                     return _response.InternalServerError();
                 }
             }

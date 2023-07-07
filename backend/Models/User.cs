@@ -17,8 +17,6 @@ namespace backend.Models
         public string? Email { get; set; }
         [Column("designation")]
         public string? Designation { get; set; }
-        [Column("isPremium")]
-        public bool? IsPremium { get; set; }
         [Column("created_at")]
         public DateTime? CreatedAt { get; set; }
     }

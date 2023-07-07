@@ -7,6 +7,7 @@ using backend.ControllerHelpers;
 using System.IdentityModel.Tokens.Jwt;
 using backend.Services;
 using backend.Attributes;
+using BCrypt.Net;
 
 namespace backend.Controllers
 {
@@ -18,6 +19,7 @@ namespace backend.Controllers
         AuthHelper _authHelper = new AuthHelper();
         ResponseAction _response = new ResponseAction();
         JWTTokenDecoder jWTTokenDecoder = new JWTTokenDecoder();
+        JWTToken _token = new JWTToken(); 
 
         public AuthController(IConfiguration? configuration, ApplicationDbContext? context)
         {
@@ -35,6 +37,7 @@ namespace backend.Controllers
                 try
                 {
                     var TotalUsers = await _context.Authentications.ToListAsync();
+                    var token = _token.GetToken(HttpContext);
                     if(TotalUsers is not null)
                     {
                         return Ok(TotalUsers);
@@ -50,6 +53,32 @@ namespace backend.Controllers
                     return Ok("No Users Found");
 
         }
+        [Route("/api/users")]
+        [HttpGet]
+        public async Task<ActionResult> GetUsers()
+        {
+            if (_context is not null)
+            {
+
+                try
+                {
+                    var TotalUsers = await _context.Users.ToListAsync();
+                    if(TotalUsers is not null)
+                    {
+                        return Ok(TotalUsers);
+                    }
+                    return _response.OK("No Users Found");
+                }catch(Exception e)
+                {
+                    return _response.InternalServerError();
+
+                }
+
+            }
+                    return Ok("No Users Found");
+
+        }
+
 
         [HttpPost("/api/signup")]
         public async Task<IActionResult> SigningUp([FromBody] TUserAuth user)
@@ -68,7 +97,7 @@ namespace backend.Controllers
                     var Authentication = new Authentication
                     {
                         UserId = guid.ToString(),
-                        Password  = user.Password,
+                        Password  = BCrypt.Net.BCrypt.HashPassword(user.Password),
                     };
 
 
@@ -80,7 +109,6 @@ namespace backend.Controllers
                         LastName = user.LastName,
                         Email = user.Email,
                         Designation = user.Designation,
-                        IsPremium = false,
                         CreatedAt = DateTime.Now
                         
                     };
@@ -116,16 +144,32 @@ namespace backend.Controllers
                     try
                     {
                         var UserId = await _authHelper.GetUserId(user.Email, _context);
-                        if (UserId != null)
+                        var HashedPassword = await _authHelper.GetPassword(UserId, _context!);
+
+                        if (UserId != null && HashedPassword != null) 
                         {
-                            var token = JWTTokenGenerator.CreateToken(UserId, user, _configuration!);
-                            Response.Headers.Add("Authorization", "Bearer " + token);
 
+                            try
+                            {
+                                bool isMatch = BCrypt.Net.BCrypt.Verify(user.Password, HashedPassword);
+                                if (isMatch)
+                                {
+                                 var token = JWTTokenGenerator.CreateToken(UserId, user, _configuration!);
+                                 Response.Headers.Add("Authorization", "Bearer " + token);
 
-                            return _response.OK("User Logged in Successfully");
+                                 return _response.OK("User Logged in Successfully");
 
+                                }
+                                else
+                                {
+                                    return _response.NotFound("Password Wrong");
+                                }
+
+                            }catch(Exception e)
+                            {
+                                Console.WriteLine(e);
+                            }
                         }
-                        return _response.NotFound("User not found.");
                     }
                     catch (Exception ex)
                     {
@@ -160,5 +204,29 @@ namespace backend.Controllers
             return Ok("Cookie removed");
         }
 
+        [HttpGet("/api/userorg")]
+        public  IActionResult UserOrg()
+        {
+                    string value = _token.GetToken(HttpContext);
+                    Tuple<JwtHeader,JwtPayload> result = jWTTokenDecoder.TokenDecoder(value);
+                    JwtPayload payload =result.Item2;
+            if (!payload.ContainsKey("OrgId"))
+            {
+                return _response.OK("Organisation Member");
+            }
+                return _response.NotFound("Not a Organisation Member");
+        }
+
+        [HttpGet("/api/userorg/all")]
+        public async Task<IActionResult> UserOrgAll()
+        {
+            var  UsersInOrganisation = await _context.UserOrganisationMappings.ToListAsync();
+            if(UsersInOrganisation is not null)
+            {
+                return Ok(UsersInOrganisation);
+            }
+                Console.Write("hey bro 00000000000000000000000000000000");
+            return Ok();
+        }
     }
 }

@@ -17,11 +17,8 @@ namespace backend.Middleware
             string token = null;  
             if(context.Request.Headers.TryGetValue("authorization", out var authorizationHeader))
             {
-                 token = authorizationHeader.ToString().Replace("Bearer", "");
-                Console.WriteLine(token);
+                 token = authorizationHeader.ToString().Replace("Bearer","").Replace(" ","");
             }
-
-
             context.Items["jwt"] = token;
             await _next(context);
         }

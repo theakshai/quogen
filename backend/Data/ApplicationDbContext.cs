@@ -10,8 +10,9 @@ namespace backend.Data
         public DbSet<Authentication> Authentications { get; set; } 
         public DbSet<User> Users { get; set; } 
         public DbSet<Organisation> Organisations  { get; set; } 
-        public DbSet<Service> Services  { get; set; } 
         public DbSet<Client> Clients  { get; set; } 
+        public DbSet<Sender> Senders  { get; set; } 
         public DbSet<Quotation> Quotations  { get; set; } 
+        public DbSet<UserOrganisationMappings> UserOrganisationMappings  { get; set; } 
     }
 }

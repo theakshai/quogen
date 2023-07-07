@@ -17,7 +17,7 @@ namespace backend.Attributes
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            var token = context.HttpContext.Request.Cookies["jwt"];
+            var token = context.HttpContext.Items["jwt"];
             if(token == null)
             {
                 context.Result = new StatusCodeResult(StatusCodes.Status403Forbidden);
@@ -26,7 +26,7 @@ namespace backend.Attributes
             else
             {
             JWTTokenDecoder jwtTokenDecoder = new JWTTokenDecoder();
-            Tuple<JwtHeader, JwtPayload> result = jwtTokenDecoder.TokenDecoder(token);
+            Tuple<JwtHeader, JwtPayload> result = jwtTokenDecoder.TokenDecoder(token.ToString());
             var Payload = result.Item2;
             var hasRequiredRole = false;
 

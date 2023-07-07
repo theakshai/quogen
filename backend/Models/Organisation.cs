@@ -17,8 +17,6 @@ namespace backend.Models
         public string? Mobile { get; set; }
         [Column("about")]
         public string? About { get; set; }
-        [Column("terms_and_condition")]
-        public string? TermsAndCondition { get; set; }
         [Column("created_by")]
         public string? CreatedBy { get; set; }
         [Column("created_at")]

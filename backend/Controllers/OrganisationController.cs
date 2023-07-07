@@ -18,6 +18,7 @@ namespace backend.Controllers
         public ApplicationDbContext? _context;
         ResponseAction _response = new ResponseAction();
         JWTTokenDecoder jWTTokenDecoder = new JWTTokenDecoder();
+        JWTToken _token = new JWTToken();
 
         public OrganisationController(IConfiguration? configuration, ApplicationDbContext? context)
         {
@@ -93,7 +94,6 @@ namespace backend.Controllers
 
         [HttpPost]
         [Route("/api/organisation/")]
-        [CustomAuth("admin")]
         public async Task<IActionResult> Create([FromBody] TOrganisation organisation)
         {
             if(organisation is not null)
@@ -106,21 +106,11 @@ namespace backend.Controllers
                 {
                     try
                     {
-                        var cookies = Request.Cookies;
-                        var UserId = "";
-
-                        foreach (var cookie in cookies)
-                        {
-                            if(cookie.Key == "jwt")
-                            {
-                                string value = cookie.Value;
+                                string value = _token.GetToken(HttpContext);
                                 Tuple<JwtHeader,JwtPayload> result = jWTTokenDecoder.TokenDecoder(value);
                                 JwtPayload payload =result.Item2;
-                                UserId = payload["UserId"].ToString();
-
-                            }
-                        }
-                        Guid guid = Guid.NewGuid();
+                                var UserId = payload["UserId"].ToString();
+                                Guid guid = Guid.NewGuid();
 
                         var Organisation = new Organisation
                         {
@@ -129,13 +119,23 @@ namespace backend.Controllers
                             Email = organisation.Email,
                             Mobile = organisation.Mobile,
                             About = organisation.About,
-                            TermsAndCondition = organisation.TermsAndCondition,
                             CreatedBy = UserId,
                             CreatedAt = DateTime.Now,
 
                         };
+
+                        var UserOrganisationMapping = new UserOrganisationMappings
+                        {
+                            UserId = UserId,
+                            OrganisationId = guid.ToString(),
+                        };
+
+
+                            var token = JWTTokenGenerator.CreateAdminToken(UserId, guid.ToString(), _configuration);
                             await _context!.Organisations.AddAsync(Organisation);
+                            await _context!.UserOrganisationMappings.AddAsync(UserOrganisationMapping);
                             await _context.SaveChangesAsync();
+                            Response.Headers.Add("Authorization", "Bearer " + token);
                             return _response.OK("Organisation Created Successfully");
 
                     }catch(Exception e)
