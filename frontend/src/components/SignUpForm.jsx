@@ -32,7 +32,6 @@ const SignUpForm = () => {
         let authHeader = response.headers["authorization"];
         const token = authHeader ? authHeader.replace("Bearer", "") : null;
         localStorage.setItem("token", token);
-        var a = localStorage.getItem("token") || "";
       })
       .catch((error) => {
         console.log(error);

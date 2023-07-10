@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import QuotationForms from "../components/QuotationForms";
 import Toggle from "../components/Toggle";
 import CQuotation from "../components/Quotation/CQuotation";
+import { QuotationContext } from "../Context/QuotationContext";
 
 const Quotation = () => {
   const [preview, setPreview] = useState(false);
-  console.log(preview);
   return (
     <>
       <div className="flex justify-around">
@@ -14,7 +14,13 @@ const Quotation = () => {
         </h1>
         <Toggle setPreview={setPreview} />
       </div>
-      {preview ? <CQuotation /> : <QuotationForms />}
+      {preview ? (
+        <QuotationContext.Consumer>
+          {(formikvalues) => <CQuotation formikvalue={formikvalues} />}
+        </QuotationContext.Consumer>
+      ) : (
+        <QuotationForms />
+      )}
     </>
   );
 };

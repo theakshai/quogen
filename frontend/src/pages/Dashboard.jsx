@@ -17,10 +17,7 @@ const Dashboard = () => {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         })
-        .then((response) => {
-          console.log(response.status);
-          console.log(response.data);
-        })
+        .then((response) => {})
         .catch((error) => {
           if (!error.response.status == 404) {
             setPresentInOrg(true);
@@ -31,12 +28,20 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
+  console.log(presentInOrg);
+
   return (
     <div>
       <p className="text-center font-lcSac text-2xl text-qwhite m-4 p-8">
         <u>Welcome to your personal Dashboard!</u>
       </p>
       {presentInOrg ? (
+        <div className="flex justify-evenly flex-wrap gap-8">
+          <DCard img={Quotations} cardName={"Quotation"} />
+          <DCard img={Organisation} cardName={"Organisation"} />
+          <DCard img={Settings} cardName={"Settings"} />
+        </div>
+      ) : (
         <div>
           <Link to={"/organisation/new"}>
             <p className="font-lcSac text-center text-qwhite cursor-pointer text-2xl border border-qwhite p-2 ">
@@ -56,13 +61,14 @@ const Dashboard = () => {
             </Link>
           </p>
         </div>
-      ) : (
-        <div className="flex justify-evenly flex-wrap gap-8">
-          <DCard img={Quotations} cardName={"Quotation"} />
-          <DCard img={Organisation} cardName={"Organisation"} />
-          <DCard img={Settings} cardName={"Settings"} />
-        </div>
       )}
+      <button
+        type="submit"
+        className="border border-qwhite w-60 h-10 font-lcSac ml-10 mt-5 text-qwhite rounded-sm"
+        onClick={() => navigate(-1)}
+      >
+        Cancel
+      </button>
     </div>
   );
 };

@@ -14,7 +14,7 @@ const BasicCard = () => {
           A perfect one for using with the flow
         </p>
         <p className="font-euclidRegular text-qwhite p-2">
-          <span className="font-euclidMedium text-5xl">$1</span>user/month
+          <span className="font-euclidMedium text-5xl">$0</span>user/month
         </p>
         <img src={Line} alt="" />
         <p className="font-euclidRegular text-qwhite text-sm mt-2 mb-2">

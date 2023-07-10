@@ -1,10 +1,12 @@
 import React from "react";
 import { Formik, Field, Form } from "formik";
+import Swal from "sweetalert2";
 import * as Yup from "yup";
 import axios from "axios";
-import bcrypt from "bcryptjs";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
+  const navigate = useNavigate();
   const loginSchema = Yup.object().shape({
     email: Yup.string().email("Invalid Email Address").required("Required"),
     password: Yup.string()
@@ -20,9 +22,23 @@ const LoginForm = () => {
         let authHeader = response.headers["authorization"];
         const token = authHeader ? authHeader.replace("Bearer", "") : null;
         localStorage.setItem("token", token);
+        navigate("/signup");
       })
       .catch((error) => {
-        console.error(error);
+        if (error.response.status == 404) {
+          Swal.fire({
+            title: "User not signed in",
+            icon: "error",
+            confirmButtonText: "Ok",
+          });
+        }
+        if (error.response.status == 400) {
+          Swal.fire({
+            title: "Username/password wrong",
+            icon: "error",
+            confirmButtonText: "Ok",
+          });
+        }
       });
   };
 

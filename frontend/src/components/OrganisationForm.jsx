@@ -35,16 +35,14 @@ const OrganisationForm = () => {
         let authHeader = response.headers["authorization"];
         const token = authHeader ? authHeader.replace("Bearer", "") : null;
         localStorage.setItem("token", token);
+        navigate("/dashboard");
       })
       .catch((error) => {
-        if (error.response.status == 500) {
-          Swal.fire({
-            title: "There some error in db. Logout and try again!",
-            icon: "error",
-            confirmButtonText: "Ok",
-          });
-        }
-        console.error(error);
+        Swal.fire({
+          title: "There some error in db. Logout and try again!",
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
       });
   };
 
@@ -75,7 +73,6 @@ const OrganisationForm = () => {
               };
               console.log(payload);
               request(payload);
-              navigate("/dashboard");
             }}
           >
             {({ errors, touched }) => (

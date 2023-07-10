@@ -12,6 +12,7 @@ import Dashboard from "./pages/Dashboard";
 import Quotation from "./pages/Quotation";
 import CQuotation from "./components/Quotation/CQuotation";
 import OrganisationForm from "./components/OrganisationForm";
+import QuotationForms from "./components/QuotationForms";
 
 function App() {
   const location = useLocation();
@@ -33,7 +34,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/quotation" element={<Quotation />} />
+        <Route path="/quotation" element={<QuotationForms />} />
         <Route path="/preview" element={<CQuotation />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/dashboard" element={<Dashboard />} />

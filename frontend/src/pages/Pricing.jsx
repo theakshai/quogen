@@ -4,7 +4,7 @@ import PremiumCard from "../components/Premium";
 
 const Pricing = () => {
   return (
-    <Fragment>
+    <div>
       <p className="font-lcSac text-qwhite text-6xl text-center p-4 sm:text-center mt-2">
         Pricing
       </p>
@@ -16,7 +16,7 @@ const Pricing = () => {
         <BasicCard />
         <PremiumCard />
       </div>
-    </Fragment>
+    </div>
   );
 };
 
