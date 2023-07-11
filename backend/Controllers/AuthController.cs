@@ -8,6 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using backend.Services;
 using backend.Attributes;
 using BCrypt.Net;
+using Newtonsoft.Json;
 
 namespace backend.Controllers
 {
@@ -68,6 +69,34 @@ namespace backend.Controllers
                         return Ok(TotalUsers);
                     }
                     return _response.OK("No Users Found");
+                }catch(Exception e)
+                {
+                    return _response.InternalServerError();
+
+                }
+
+            }
+                    return Ok("No Users Found");
+
+        }
+
+        [Route("/api/user/{id}")]
+        [HttpGet]
+        public async Task<ActionResult> GetUser(string? id)
+        {
+            if (_context is not null)
+            {
+
+                try
+                {
+
+                    var User = await _context.Users.FirstOrDefaultAsync(u => u.UserId == id);
+                    Console.WriteLine("The user is " + User);
+                    if(User is not null)
+                    {
+                        return Ok(User);
+                    }
+                    return _response.OK("No User Found");
                 }catch(Exception e)
                 {
                     return _response.InternalServerError();
@@ -210,7 +239,8 @@ namespace backend.Controllers
                     string value = _token.GetToken(HttpContext);
                     Tuple<JwtHeader,JwtPayload> result = jWTTokenDecoder.TokenDecoder(value);
                     JwtPayload payload =result.Item2;
-            if (!payload.ContainsKey("OrgId"))
+            Console.WriteLine(JsonConvert.SerializeObject(payload));
+            if (payload.ContainsKey("OrgId"))
             {
                 return _response.OK("Organisation Member");
             }

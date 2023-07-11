@@ -48,7 +48,6 @@ namespace backend.Controllers
         }
 
         [HttpPost("/api/quotation")]
-        [CustomAuth("akkshai")]
 
         public async Task<IActionResult> Create([FromBody] TClientQuotation quotation)
         {

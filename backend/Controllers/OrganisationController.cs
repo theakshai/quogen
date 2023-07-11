@@ -100,7 +100,7 @@ namespace backend.Controllers
             {
                 if(await OrganisationExists(organisation?.OrganisationName!))
                 {
-                    return _response.Conflict();
+                    return _response.NotFound("Organisation with this name already exists");
                 }
                 else
                 {
