@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const SignUpForm = () => {
+const SignUpForm = ({ userProfile }) => {
   const navigate = useNavigate();
   const signUpSchema = Yup.object().shape({
     firstName: Yup.string()
@@ -45,11 +45,11 @@ const SignUpForm = () => {
       </p>
       <Formik
         initialValues={{
-          firstName: "",
-          lastName: "",
-          email: "",
-          password: "",
-          designation: "",
+          firstName: userProfile?.firstName || "",
+          lastName: userProfile?.lastName || "",
+          email: userProfile?.email || "",
+          password: userProfile?.password || "",
+          designation: userProfile?.designation || "",
         }}
         validationSchema={signUpSchema}
         onSubmit={(values) => {

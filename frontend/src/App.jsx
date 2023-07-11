@@ -1,8 +1,6 @@
 import React from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
-import Why from "./pages/Why";
-import Pricing from "./pages/Pricing";
 import About from "./pages/About";
 import Contact from "./components/Contact";
 import Navbar from "./components/Navbar";
@@ -13,6 +11,10 @@ import Quotation from "./pages/Quotation";
 import CQuotation from "./components/Quotation/CQuotation";
 import OrganisationForm from "./components/OrganisationForm";
 import QuotationForms from "./components/QuotationForms";
+import NotFound from "./pages/404";
+import Profile from "./pages/Profile";
+import MyForm from "./pages/MyForm";
+import Organisation from "./pages/Organisation";
 
 function App() {
   const location = useLocation();
@@ -22,6 +24,8 @@ function App() {
     "/quotation",
     "/preview",
     "/organisation/new",
+    "/404",
+    "/profile",
   ];
   const shouldShowNavbar = !excludedEndpoints.includes(location.pathname);
   return (
@@ -29,8 +33,6 @@ function App() {
       {shouldShowNavbar && <Navbar />}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/why" element={<Why />} />
-        <Route path="/pricing" element={<Pricing />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
@@ -39,6 +41,10 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/organisation/new" element={<OrganisationForm />} />
+        <Route path="/404" element={<NotFound />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/exp" element={<MyForm />} />
+        <Route path="/organisation" element={<Organisation />} />
       </Routes>
     </div>
   );

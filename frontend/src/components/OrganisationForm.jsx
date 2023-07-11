@@ -3,7 +3,7 @@ import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const OrganisationForm = () => {
   const navigate = useNavigate();
@@ -38,18 +38,39 @@ const OrganisationForm = () => {
         navigate("/dashboard");
       })
       .catch((error) => {
-        Swal.fire({
-          title: "There some error in db. Logout and try again!",
-          icon: "error",
-          confirmButtonText: "Ok",
-        });
+        if (error.response.status == 400) {
+          Swal.fire({
+            title: "Organisation with this name is already exists",
+            icon: "error",
+            confirmButtonText: "Ok",
+          });
+        } else if (error.response.status == 403) {
+          navigate("/404");
+        } else if (error.response.status == 500) {
+          Swal.fire({
+            title: "Internal Server error in db. Signin/Login to use",
+            icon: "error",
+            confirmButtonText: "Ok",
+          });
+        } else {
+          Swal.fire({
+            title: "Logout and try again!",
+            icon: "error",
+            confirmButtonText: "Ok",
+          });
+        }
       });
   };
 
   return (
+    // <motion.div
+    //     initial={{ opacity: 0 }}
+    //     animate={{ opacity: 1 }}
+    //     transition={{ delay: 0.5, duration: 2 }}
+    // >
     <>
       <p className="font-lcSac text-qwhite text-8xl p-6 mt-8  text-center">
-        QuoGen
+        <Link to={"/"}>QuoGen</Link>
       </p>
       <div className="flex justify-around">
         <div>
@@ -131,6 +152,7 @@ const OrganisationForm = () => {
         </div>
       </div>
     </>
+    // </motion.div>
   );
 };
 

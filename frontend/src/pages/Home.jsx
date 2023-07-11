@@ -1,37 +1,48 @@
 import React, { Fragment } from "react";
 import { motion } from "framer-motion";
-import Button from "../components/Button";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <Fragment>
-      <div className="text-center ">
-        <motion.div
-          className="font-lcSac text-qwhite text-9xl"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 2 }}
-        >
-          Quogen
-        </motion.div>
-        <motion.div
-          className="pt-8"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 2 }}
-        >
-          <p className="font-euclidRegular text-qwhite text-2xl">
-            Tired of Fancy Quotation generator?
-          </p>
-          <p className="font-euclidRegular text-qwhite text-2xl">
-            Welcome to QuoGen an aesthetic quotation generator for photography
-            studios.
-          </p>
-        </motion.div>
-        <div className="p-8">
-          <Button action="Let's start" url={"/quotation"} />
+      <motion.div
+        className="m-10 p-10"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5, duration: 2 }}
+      >
+        <div className="text-center ">
+          <div className="font-lcSac text-qwhite text-7xl sm:text-9xl mr-8">
+            Quogen
+          </div>
+          <div className="pt-8">
+            <p className="font-euclidRegular text-qwhite ">
+              Tired of Fancy Quotation generator?
+            </p>
+            <p className="font-euclidRegular text-qwhite ">
+              Welcome to QuoGen an aesthetic quotation generator for photography
+              studios.
+            </p>
+          </div>
+          <div className="p-8 flex gap-4 justify-center flex-wrap">
+            <button
+              type="submit"
+              className="border border-qwhite w-60 h-10 font-lcSac sm:ml-10 sm:mt-5 text-qwhite rounded-sm"
+              onClick={() => navigate("/login")}
+            >
+              Login in
+            </button>
+            <button
+              type="submit"
+              className="border border-qwhite w-60 h-10 font-lcSac sm:ml-10 sm:mt-5 text-qwhite rounded-sm"
+              onClick={() => navigate("/signup")}
+            >
+              Sign Up
+            </button>
+          </div>
         </div>
-      </div>
+      </motion.div>
     </Fragment>
   );
 };

@@ -11,11 +11,11 @@ import Footer from "./Quotation/Footer";
 import "../components/Quotation/quotation.css";
 import * as Yup from "yup";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, Navigate, json } from "react-router-dom";
+import MyForm from "../pages/MyForm";
 
 const QuotationForms = () => {
   const [preview, setPreview] = useState(true);
-  console.log("The current prev is " + preview);
   const formik = useFormik({
     initialValues: {
       senderName: "",
@@ -28,6 +28,7 @@ const QuotationForms = () => {
       clientState: "",
       about: "",
       tc: "",
+      total: "",
     },
     validationSchema: Yup.object({
       senderName: Yup.string()
@@ -56,8 +57,19 @@ const QuotationForms = () => {
         .required("Required"),
       about: Yup.string().max(2000, "Maxium only 2000 chars to be present"),
       tc: Yup.string().max(2000, "Maxium only 2000 chars to be present"),
+      services: Yup.array().of(
+        Yup.object().shape({
+          service: Yup.string().required("Service name is required"),
+          quantity: Yup.number()
+            .typeError("Quantity must be a number")
+            .integer("Quantity must be an integer")
+            .positive("Quantity must be a positive number")
+            .required("Quantity is required"),
+        })
+      ),
     }),
     onSubmit: (values) => {
+      console.log("the values are " + values);
       request(payload);
     },
   });
@@ -74,6 +86,8 @@ const QuotationForms = () => {
     clientState: formik.values.clientState,
     about: formik.values.about,
     tc: formik.values.tc,
+    service: "",
+    total: 1300,
   };
 
   const request = (payload) => {
@@ -85,6 +99,7 @@ const QuotationForms = () => {
       })
       .then((response) => {
         console.log(response.data);
+        // Navigate("/dashboard");
       })
       .catch((error) => {
         console.log(error);
@@ -99,7 +114,6 @@ const QuotationForms = () => {
         </h1>
         <Toggle setPreview={setPreview} />
       </div>
-
       {preview ? (
         <motion.div
           initial={{ opacity: 0 }}
@@ -121,6 +135,7 @@ const QuotationForms = () => {
                   type="text"
                   placeholder="Sender Name"
                   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   value={formik.values.senderName}
                   className="mt-2 font-euclidRegular text-qwhite bg-qblue block mb-4 w-80 h-10 p-2 outline-none border border-qwhite"
                 />
@@ -143,6 +158,7 @@ const QuotationForms = () => {
                   type="text"
                   placeholder="Sender Email"
                   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   value={formik.values.senderEmail}
                   className="font-euclidRegular text-qwhite bg-qblue block mb-4 w-80 h-10 p-2 mt-2 outline-none border border-qwhite"
                 />
@@ -167,6 +183,7 @@ const QuotationForms = () => {
                   type="text"
                   placeholder="Sender Mobile"
                   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   value={formik.values.senderMobile}
                   className="mt-2 font-euclidRegular text-qwhite bg-qblue block mb-4 w-80 h-10 p-2 outline-none border border-qwhite"
                 />
@@ -190,6 +207,7 @@ const QuotationForms = () => {
                   placeholder="Sender State"
                   onChange={formik.handleChange}
                   value={formik.values.senderState}
+                  onBlur={formik.handleBlur}
                   className="font-euclidRegular text-qwhite bg-qblue block mb-4 w-80 h-10 p-2 mt-2 outline-none border border-qwhite"
                 />
                 {formik.touched.senderState && formik.errors.senderState ? (
@@ -213,6 +231,7 @@ const QuotationForms = () => {
                   type="text"
                   placeholder="Client Name"
                   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   value={formik.values.clientName}
                   className="mt-2 font-euclidRegular text-qwhite bg-qblue block mb-4 w-80 h-10 p-2 outline-none border border-qwhite"
                 />
@@ -235,6 +254,7 @@ const QuotationForms = () => {
                   type="email"
                   placeholder="Client Email"
                   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   value={formik.values.clientEmail}
                   className="font-euclidRegular text-qwhite bg-qblue block mb-4 w-80 h-10 p-2 mt-2 outline-none border border-qwhite"
                 />
@@ -258,6 +278,7 @@ const QuotationForms = () => {
                   name="clientMobile"
                   type="text"
                   placeholder="Client Mobile No"
+                  onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
                   value={formik.values.clientMobile}
                   className="mt-2 font-euclidRegular text-qwhite bg-qblue block mb-4 w-80 h-10 p-2 outline-none border border-qwhite"
@@ -281,6 +302,7 @@ const QuotationForms = () => {
                   type="text"
                   placeholder="Client State"
                   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   value={formik.values.clientState}
                   className="font-euclidRegular text-qwhite bg-qblue block mb-4 w-80 h-10 p-2 mt-2 outline-none border border-qwhite"
                 />
@@ -307,6 +329,7 @@ const QuotationForms = () => {
                   placeholder="Ex: Write about the summary of this project"
                   className="p-2 mt-2 font-euclidRegular bg-qblue border border-qwhite text-qwhite"
                   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   value={formik.values.about}
                 />
                 {formik.touched.about && formik.errors.about ? (
@@ -332,6 +355,7 @@ const QuotationForms = () => {
                   placeholder="Ex: Write about the summary of this project"
                   className="p-2 mt-2 font-euclidRegular bg-qblue border border-qwhite text-qwhite"
                   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   value={formik.values.tc}
                 />
                 {formik.touched.tc && formik.errors.tc ? (
@@ -341,6 +365,10 @@ const QuotationForms = () => {
                 ) : null}
               </div>
             </div>
+            <h1 className="font-lcSac text-qwhite text-center text-2xl p-4">
+              Add Services
+            </h1>
+            {/* <MyForm initialValues={formik.initialValues} /> */}
             <div className="flex justify-center">
               <button
                 type="submit"
@@ -365,7 +393,7 @@ const QuotationForms = () => {
             <SenderReciver payload={formik.values} />
             <hr />
 
-            <About />
+            <About payload={formik.values} />
             <hr />
 
             <div className="mt-4 flex justify-around">
@@ -380,7 +408,7 @@ const QuotationForms = () => {
             <p className="text-center font-euclidSemibold text-xl text-qblue p-6 mr-10 ">
               The estimated Amount* is $1200
             </p>
-            <TC />
+            <TC payload={formik.values} />
             <hr />
             <Footer />
           </div>

@@ -5,8 +5,11 @@ import Settings from "../assets/Settings.svg";
 import Organisation from "../assets/Organisation.svg";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useJwt } from "react-jwt";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [presentInOrg, setPresentInOrg] = useState(false);
 
   useEffect(() => {
@@ -17,10 +20,11 @@ const Dashboard = () => {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         })
-        .then((response) => {})
+        .then((response) => {
+          setPresentInOrg(true);
+        })
         .catch((error) => {
-          if (!error.response.status == 404) {
-            setPresentInOrg(true);
+          if (error.response.status == 404) {
           }
         });
     };
@@ -38,37 +42,28 @@ const Dashboard = () => {
       {presentInOrg ? (
         <div className="flex justify-evenly flex-wrap gap-8">
           <DCard img={Quotations} cardName={"Quotation"} />
-          <DCard img={Organisation} cardName={"Organisation"} />
-          <DCard img={Settings} cardName={"Settings"} />
+          <Link to={"/organisation"}>
+            <DCard img={Organisation} cardName={"Organisation"} />
+          </Link>
+          <Link to={"/profile"}>
+            <DCard img={Settings} cardName={"Profile"} />
+          </Link>
         </div>
       ) : (
         <div>
           <Link to={"/organisation/new"}>
-            <p className="font-lcSac text-center text-qwhite cursor-pointer text-2xl border border-qwhite p-2 ">
+            <p className="font-lcSac text-center text-qwhite cursor-pointer text-2xl border border-qwhite p-2 m-10">
               Add Organisation +
             </p>
           </Link>
-          <p className="text-center font-lcSac text-xl text-qwhite m-4 p-8">
+          <p className="text-center font-euclidRegular text-xl text-qwhite m-4 p-8">
             <u>
               Note: To quotation to be stored and editable, create an
               organisation.
             </u>
           </p>
-          <p className="text-center font-lcSac text-xl text-qwhite m-4 p-8">
-            No need to pay for organisation? Feel free to create free quotation{" "}
-            <Link to={"/quotation"}>
-              <u>here</u>
-            </Link>
-          </p>
         </div>
       )}
-      <button
-        type="submit"
-        className="border border-qwhite w-60 h-10 font-lcSac ml-10 mt-5 text-qwhite rounded-sm"
-        onClick={() => navigate(-1)}
-      >
-        Cancel
-      </button>
     </div>
   );
 };

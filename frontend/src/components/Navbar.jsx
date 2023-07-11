@@ -16,16 +16,6 @@ const Navbar = () => {
         </div>
         <div className="hidden sm:flex">
           <li className="list-none px-4">
-            <Link to={"/why"} className="font-euclidRegular text-qwhite">
-              Why?
-            </Link>
-          </li>
-          <li className="list-none px-4">
-            <Link to={"/pricing"} className="font-euclidRegular text-qwhite">
-              Pricing
-            </Link>
-          </li>
-          <li className="list-none px-4">
             <Link to={"/about"} className="font-euclidRegular text-qwhite">
               About
             </Link>
