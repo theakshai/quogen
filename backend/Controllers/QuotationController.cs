@@ -7,6 +7,7 @@ using backend.Models;
 using System.IdentityModel.Tokens.Jwt;
 using backend.Services;
 using backend.ControllerHelpers;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace backend.Controllers
 {
@@ -46,6 +47,58 @@ namespace backend.Controllers
             }
 
         }
+        [HttpGet("/api/quotation/{id}")]
+        public async Task<IActionResult> Get(string id)
+        {
+
+            try
+            {
+                var result = _context.Quotations
+        .Where(q => q.QuotationId == id)
+        .Join(
+            _context.Clients,
+            q => q.ClientId,
+            c => c.Client_id,
+            (q, c) => new { Quotation = q, Client = c }
+        )
+        .Join(
+            _context.Senders,
+            q => q.Quotation.SenderId,
+            s => s.SenderId,
+            (q, s) => new { q.Quotation, q.Client, Sender = s }
+        )
+        .Select(qcs => new
+        {
+            QuotationId = qcs.Quotation.QuotationId,
+            Confirmed = qcs.Quotation.Confirmed,
+            CreatedAt = qcs.Quotation.CreatedAt,
+            CreatedBy = qcs.Quotation.CreatedBy,
+            TotalCost = qcs.Quotation.TotalCost,
+            Service = qcs.Quotation.Service,
+            ClientId = qcs.Client.Client_id,
+            ClientName = qcs.Client.ClientName,
+            ClientEmail = qcs.Client.ClientEmail,
+            ClientMobile = qcs.Client.ClientMobile,
+            ClientState = qcs.Client.ClientState,
+            SenderId = qcs.Sender.SenderId,
+            SenderName = qcs.Sender.SenderName,
+            SenderEmail = qcs.Sender.SenderEmail,
+            SenderMobile = qcs.Sender.SenderMobile,
+            SenderState = qcs.Sender.SenderState
+        })
+        .FirstOrDefault();
+                if(result is not null)
+                {
+                    return Ok(result);
+                }
+                     return Ok("No Quotations");
+            }catch(Exception e)
+            {
+                     return StatusCode(500, "Internal Server Error");
+            }
+
+        }
+
 
         [HttpPost("/api/quotation")]
 
@@ -92,7 +145,7 @@ namespace backend.Controllers
                     var Quotation = new Quotation
                     {
                         QuotationId = _QuotationId.ToString(),
-                        Confirmed = 0,
+                        Confirmed = false,
                         CreatedAt = DateTime.Now,
                         CreatedBy = UserId,
                         TotalCost = quotation.TotalCost,
@@ -115,6 +168,44 @@ namespace backend.Controllers
             }
 
             return _response.Conflict();
+
+        }
+
+        [HttpPost("/api/quotation/convert/{id}")]
+        public async Task<IActionResult> Convert(string? id)
+        {
+
+            try
+            {
+                var Quotation = await _context.Quotations.FirstOrDefaultAsync(q => q.QuotationId == id);
+                if(Quotation is not null)
+                {
+                    Quotation.Confirmed = true;
+                    _context.SaveChangesAsync();
+                }
+                     return Ok("Confirmed");
+            }catch(Exception e)
+            {
+                     return StatusCode(500, "Internal Server Error");
+            }
+
+        }
+        [HttpGet("/api/quotation/converted/")]
+        public async Task<IActionResult> Converted()
+        {
+
+            try
+            {
+                var Quotation =  _context.Quotations.Where(q => q.Confirmed == true).ToList();
+                if(Quotation is not null)
+                {
+                    return Ok(Quotation);
+                }
+                return _response.NotFound("No Quotations Found");
+            }catch(Exception e)
+            {
+                     return StatusCode(500, "Internal Server Error");
+            }
 
         }
 

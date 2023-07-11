@@ -187,5 +187,32 @@ namespace backend.Controllers
         {
             return StatusCode(409, "Not able to remove user from the organisation . See logs for more details");
         }
+
+        [HttpGet]
+        [Route("/api/organisation/{id}/users")]
+        public async Task<IActionResult> OrgQuotations(string? id)
+        {
+            if(id is not null)
+            {
+                try
+                {
+                    var Organisation = await _context.Organisations.FirstOrDefaultAsync(o => o.OrganistationId == id); 
+                    if(Organisation == null)
+                    {
+                        return _response.NotFound("Organisation Not found");
+                    }
+                    var OrgUsers =  _context.UserOrganisationMappings.Where(o => o.OrganisationId == id).ToList();
+                    return Ok(OrgUsers);
+
+                }catch(Exception ex)
+                {
+                    return StatusCode(500, "Internal Server Error");
+                }
+
+            }
+
+            return StatusCode(409, "Unable to get the  Organisation Users");
+        }
+
     }
 }

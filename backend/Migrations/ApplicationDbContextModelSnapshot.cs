@@ -109,8 +109,8 @@ namespace backend.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("client_id");
 
-                    b.Property<int?>("Confirmed")
-                        .HasColumnType("int")
+                    b.Property<bool?>("Confirmed")
+                        .HasColumnType("bit")
                         .HasColumnName("confirmed");
 
                     b.Property<DateTime?>("CreatedAt")

@@ -36,7 +36,7 @@ create table Clients(
 create table Senders(
 	sender_id varchar(50)  primary key not null,
 	sender_name varchar(100),
-	sender_email varchar(50) unique not null,
+	sender_email varchar(50)  not null,
 	sender_mobile varchar(50),
 	sender_state varchar(50)
 	)
@@ -56,12 +56,21 @@ create table Quotations(
 )
 
 create table UserOrganisationMappings(
-	 id int primary key identity,
+	id int primary key identity,
 	user_id varchar(50),
 	organisation_id varchar(50),
 	foreign key (user_id) references Users(user_id) ,
 	foreign key (organisation_id) references Organisations(organisation_id) ,
 	)
+
+create table OrgQuotationMappings(
+	 id int primary key identity,
+	organisation_id varchar(50),
+	quotation_id varchar(50),
+	foreign key (organisation_id) references Organisations(organisation_id) on delete cascade,
+	foreign key (quotation_id) references Quotations(quotation_id) on delete set null ,
+
+)
 
 delete from UserOrganisationMappings
 delete from Users
@@ -72,6 +81,7 @@ delete from Senders
 delete from Clients
 
 drop table UserOrganisationMappings
+drop table OrgQuotationMappings
 drop table Users
 drop table Organisations
 drop table Clients

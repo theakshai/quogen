@@ -9,7 +9,7 @@ namespace backend.Models
         [Column("quotation_id")]
         public string? QuotationId { get; set; }
         [Column("confirmed")]
-        public int? Confirmed { get; set; }
+        public bool? Confirmed { get; set; }
         [Column("created_at")]
         public DateTime? CreatedAt { get; set; }
         [Column("created_by")]
