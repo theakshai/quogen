@@ -41,6 +41,11 @@ const Home = () => {
               Sign Up
             </button>
           </div>
+          <div>
+            <p className=" font-euclidRegular text-qwhite text-center">
+              Contact <u>qugogen@support.com</u> for queries
+            </p>
+          </div>
         </div>
       </motion.div>
     </Fragment>

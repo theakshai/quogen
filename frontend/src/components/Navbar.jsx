@@ -14,20 +14,12 @@ const Navbar = () => {
             QG
           </Link>
         </div>
-        <div className="hidden sm:flex">
+        <div className=" sm:flex">
           <li className="list-none px-4">
             <Link to={"/about"} className="font-euclidRegular text-qwhite">
-              About
+              Usage
             </Link>
           </li>
-          <li className="list-none px-4">
-            <Link to={"/contact"} className="font-euclidRegular text-qwhite">
-              Contact
-            </Link>
-          </li>
-        </div>
-        <div className="sm:hidden">
-          <Hamburger />
         </div>
       </div>
     </Fragment>

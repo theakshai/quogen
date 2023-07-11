@@ -1,7 +1,7 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Toggle from "../components/Toggle";
 import { motion } from "framer-motion";
-import { useFormikContext, useFormik } from "formik";
+import { useFormik } from "formik";
 import SenderReciver from "./Quotation/SenderReciver";
 import About from "./Quotation/About";
 import TC from "./Quotation/TC";
@@ -11,13 +11,46 @@ import Footer from "./Quotation/Footer";
 import "../components/Quotation/quotation.css";
 import * as Yup from "yup";
 import axios from "axios";
-import { Link, Navigate, json } from "react-router-dom";
-import MyForm from "../pages/MyForm";
+import { Link, Navigate, json, useNavigate, useParams } from "react-router-dom";
 
-const QuotationForms = () => {
-  const [preview, setPreview] = useState(true);
-  const formik = useFormik({
-    initialValues: {
+const QuotationForms = ({}) => {
+  const { quotationId } = useParams();
+  const [dform, setdform] = useState();
+  const url = `http://localhost:5146/api/quotation/${quotationId}`;
+
+  const a = async () => {
+    await axios
+      .get(url)
+      .then((response) => {
+        const data = response.data;
+        setdform(data);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    a();
+  }, [quotationId]);
+
+  let ivalue = {};
+  if (dform !== null && dform !== undefined) {
+    console.log(dform);
+    ivalue = {
+      senderName: dform.senderName || "",
+      senderEmail: dform.senderEmail || "",
+      senderMobile: dform.senderMobile || "",
+      senderState: dform.senderState || "",
+      clientName: dform.clientName || "",
+      clientEmail: dform.clientEmail || "",
+      clientMobile: dform.clientMobile || "",
+      clientState: dform.clientState || "",
+      about: dform.about || "",
+      tc: "",
+      service: "",
+      total: 10000,
+    };
+  } else {
+    ivalue = {
       senderName: "",
       senderEmail: "",
       senderMobile: "",
@@ -28,8 +61,14 @@ const QuotationForms = () => {
       clientState: "",
       about: "",
       tc: "",
-      total: "",
-    },
+      service: "",
+      total: 10000,
+    };
+  }
+
+  const [preview, setPreview] = useState(true);
+  const formik = useFormik({
+    initialValues: ivalue,
     validationSchema: Yup.object({
       senderName: Yup.string()
         .max(30, "Maximum only 30 words to be there")
@@ -57,16 +96,7 @@ const QuotationForms = () => {
         .required("Required"),
       about: Yup.string().max(2000, "Maxium only 2000 chars to be present"),
       tc: Yup.string().max(2000, "Maxium only 2000 chars to be present"),
-      services: Yup.array().of(
-        Yup.object().shape({
-          service: Yup.string().required("Service name is required"),
-          quantity: Yup.number()
-            .typeError("Quantity must be a number")
-            .integer("Quantity must be an integer")
-            .positive("Quantity must be a positive number")
-            .required("Quantity is required"),
-        })
-      ),
+      service: Yup.string().max(2000, "Maxium only 2000 chars to be present"),
     }),
     onSubmit: (values) => {
       console.log("the values are " + values);
@@ -86,10 +116,11 @@ const QuotationForms = () => {
     clientState: formik.values.clientState,
     about: formik.values.about,
     tc: formik.values.tc,
-    service: "",
-    total: 1300,
+    service: formik.values.service,
+    total: formik.values.total,
   };
 
+  const navigate = useNavigate();
   const request = (payload) => {
     instance
       .post("http://localhost:5146/api/quotation", payload, {
@@ -99,7 +130,7 @@ const QuotationForms = () => {
       })
       .then((response) => {
         console.log(response.data);
-        // Navigate("/dashboard");
+        navigate("/quotation/all");
       })
       .catch((error) => {
         console.log(error);
@@ -342,6 +373,32 @@ const QuotationForms = () => {
             <div className="flex justify-center">
               <div>
                 <label
+                  htmlFor="service"
+                  className="block font-lcSac text-xl text-qwhite"
+                >
+                  Service{" "}
+                </label>
+                <textarea
+                  name="service"
+                  id="service"
+                  cols="92"
+                  rows="5"
+                  placeholder="Ex: Write about the summary of this project"
+                  className="p-2 mt-2 font-euclidRegular bg-qblue border border-qwhite text-qwhite"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.service}
+                />
+                {formik.touched.service && formik.errors.service ? (
+                  <div className="font-lcSac text-qwhite">
+                    {formik.errors.service}
+                  </div>
+                ) : null}
+              </div>
+            </div>
+            <div className="flex justify-center">
+              <div>
+                <label
                   htmlFor="tc"
                   className="block font-lcSac text-xl text-qwhite mt-4"
                 >
@@ -365,10 +422,6 @@ const QuotationForms = () => {
                 ) : null}
               </div>
             </div>
-            <h1 className="font-lcSac text-qwhite text-center text-2xl p-4">
-              Add Services
-            </h1>
-            {/* <MyForm initialValues={formik.initialValues} /> */}
             <div className="flex justify-center">
               <button
                 type="submit"
@@ -395,15 +448,7 @@ const QuotationForms = () => {
 
             <About payload={formik.values} />
             <hr />
-
-            <div className="mt-4 flex justify-around">
-              <p className="font-euclidMedium">Service</p>
-              <p className="font-euclidMedium">Quantity</p>
-            </div>
-            <Services />
-            <Services />
-            <Services />
-            <Services />
+            <Services payload={formik.values} />
 
             <p className="text-center font-euclidSemibold text-xl text-qblue p-6 mr-10 ">
               The estimated Amount* is $1200

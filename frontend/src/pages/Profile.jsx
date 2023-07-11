@@ -8,25 +8,22 @@ import SignUpForm from "../components/SignUpForm";
 const Profile = () => {
   const token = localStorage.getItem("token");
   const { decodedToken, isExpired } = useJwt(token);
-  let orgId = "";
   let userId = "";
   if (decodedToken) {
     userId = decodedToken.UserId;
-    orgId = decodedToken.OrgId;
   }
-  console.log(userId);
-  let userProfile = {};
-  let userData = {};
 
   const [uProfile, setUProfile] = useState();
 
+  let url = `http://localhost:5146/api/user/${userId}`;
+  console.log(userId);
+
   const request = async () => {
     await axios
-      .get(
-        "http://localhost:5146/api/user/bea95a4f-eb5b-426c-bbcb-a76093fc242a"
-      )
+      .get(url)
       .then((response) => {
-        setUProfile(response.data);
+        const details = response.data;
+        setUProfile(details);
       })
       .catch((error) => {
         console.log(error);
@@ -34,8 +31,12 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    request();
-  }, []);
+    if (userId) {
+      request();
+    }
+  }, [userId]);
+
+  console.log(uProfile);
 
   return (
     <Fragment>
@@ -45,7 +46,7 @@ const Profile = () => {
         </p>
       </div>
       <div className="flex justify-around mt-10 ">
-        <SignUpForm userProfile={uProfile} />
+        {uProfile ? <SignUpForm userProfile={uProfile} /> : null}
       </div>
     </Fragment>
   );
