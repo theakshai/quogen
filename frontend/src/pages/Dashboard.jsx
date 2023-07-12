@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useJwt } from "react-jwt";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import dashboard from "../assets/dashboard.png";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -35,17 +37,23 @@ const Dashboard = () => {
   console.log(presentInOrg);
 
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 0.5, duration: 2 }}
+    >
       <p className="text-center font-lcSac text-2xl text-qwhite m-4 p-8">
         <u>Welcome to your personal Dashboard!</u>
       </p>
       {presentInOrg ? (
         <div className="flex justify-evenly flex-wrap gap-8">
-          <DCard img={Quotations} cardName={"Quotation"} />
-          <Link to={"/organisation"}>
+          <Link to="/quotation/all">
+            <DCard img={Quotations} cardName={"Quotation"} />
+          </Link>
+          <Link to="/organisation">
             <DCard img={Organisation} cardName={"Organisation"} />
           </Link>
-          <Link to={"/profile"}>
+          <Link to="/profile">
             <DCard img={Settings} cardName={"Profile"} />
           </Link>
         </div>
@@ -64,7 +72,7 @@ const Dashboard = () => {
           </p>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

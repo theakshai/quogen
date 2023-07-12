@@ -38,11 +38,7 @@ function App() {
         <Route
           path="/"
           element={
-            token ? (
-              <Navigate to={"/quotation/dashboard"} />
-            ) : (
-              <Navigate to={"/home"} />
-            )
+            token ? <Navigate to={"/dashboard"} /> : <Navigate to={"/home"} />
           }
         />
         <Route path="/home" element={<Home />} />
@@ -51,6 +47,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/quotation" element={<QuotationForms />} />
         <Route path="/quotation/:quotationId" element={<QuotationForms />} />
+        <Route path="/signup/:quotationId" element={<SignUp />} />
         <Route path="/preview" element={<CQuotation />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/dashboard" element={<Dashboard />} />
