@@ -7,7 +7,6 @@ import Navbar from "./components/Navbar";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import Dashboard from "./pages/Dashboard";
-import Quotation from "./pages/Quotation";
 import CQuotation from "./components/Quotation/CQuotation";
 import OrganisationForm from "./components/OrganisationForm";
 import QuotationForms from "./components/QuotationForms";
@@ -17,7 +16,6 @@ import Organisation from "./pages/Organisation";
 import UsersQuotation from "./pages/UsersQuotation";
 import QuotationDashboard from "./pages/QuotationDashboard";
 import ConvertedQuotation from "./pages/ConvertedQuotation";
-import { useScroll } from "framer-motion";
 
 function App() {
   const location = useLocation();
@@ -28,6 +26,7 @@ function App() {
     "/preview",
     "/organisation/new",
     "/404",
+    "*",
     "/profile",
   ];
   const shouldShowNavbar = !excludedEndpoints.includes(location.pathname);
@@ -61,6 +60,7 @@ function App() {
         <Route path="/quotation/converted" element={<ConvertedQuotation />} />
         <Route path="/quotation/dashboard" element={<QuotationDashboard />} />
         <Route path="/404" element={<NotFound />} />
+        <Route path="*" element={<NotFound />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
     </div>

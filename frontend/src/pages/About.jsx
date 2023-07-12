@@ -5,11 +5,11 @@ const About = () => {
   return (
     <Fragment>
       <div className="flex-col justify-around">
-        <p className="font-lcSac text-qwhite text-6xl text-center p-4 sm:text-center mt-2">
+        <p className="font-lcSac text-qwhite text-6xl text-left p-10 ml-8 sm:text-left mt-2">
           About
         </p>
         <div>
-          <p className="font-lcSac text-qwhite sm:text-justify  text-xl p-4 m-4 leading-8">
+          <p className="font-lcSac text-qwhite sm:text-justify  text-xl p-10 m-4 leading-8">
             At Quogen, we are dedicated to the way businesses generate
             quotations. Our innovative quotation generator software offers a
             seamless and efficient solution for creating professional quotes in

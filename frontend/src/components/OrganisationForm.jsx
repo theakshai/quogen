@@ -38,6 +38,7 @@ const OrganisationForm = () => {
         navigate("/dashboard");
       })
       .catch((error) => {
+        console.log(error);
         if (error.response.status == 400) {
           Swal.fire({
             title: "Organisation with this name is already exists",

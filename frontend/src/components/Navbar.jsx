@@ -17,7 +17,7 @@ const Navbar = () => {
         <div className=" sm:flex">
           <li className="list-none px-4">
             <Link to={"/about"} className="font-euclidRegular text-qwhite">
-              Usage
+              About
             </Link>
           </li>
         </div>

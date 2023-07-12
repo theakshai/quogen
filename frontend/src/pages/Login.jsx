@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import LoginForm from "../components/LoginForm";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
@@ -14,6 +15,12 @@ const Login = () => {
       </p>
       <div className="flex justify-around">
         <LoginForm />
+      </div>
+      <div className="font-euclidRegular mt-5 text-xl text-qwhite text-center">
+        No account?
+        <Link to="/signup">
+          <u> SignUp</u>
+        </Link>
       </div>
     </motion.div>
   );

@@ -61,7 +61,7 @@ const SignUpForm = ({ userProfile }) => {
             password: values.password,
           };
           request(payload);
-          navigate("/quotation/all");
+          navigate("/quotation/dashboard");
         }}
       >
         {({ errors, touched }) => (

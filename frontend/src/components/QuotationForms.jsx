@@ -11,7 +11,10 @@ import Footer from "./Quotation/Footer";
 import "../components/Quotation/quotation.css";
 import * as Yup from "yup";
 import axios from "axios";
+import PDFGenerator from "./PDFGenerator";
 import { Link, Navigate, json, useNavigate, useParams } from "react-router-dom";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 const QuotationForms = ({}) => {
   const { quotationId } = useParams();
@@ -47,7 +50,6 @@ const QuotationForms = ({}) => {
       about: dform.about || "",
       tc: "",
       service: "",
-      total: 10000,
     };
   } else {
     ivalue = {
@@ -62,7 +64,6 @@ const QuotationForms = ({}) => {
       about: "",
       tc: "",
       service: "",
-      total: 10000,
     };
   }
 
@@ -104,6 +105,15 @@ const QuotationForms = ({}) => {
     },
   });
 
+  const handlepdf = () => {
+    const element = document.getElementById("pdf-content");
+    html2canvas(element).then((canvas) => {
+      const pdf = new jsPDF("p", "mm", "a4");
+      const imgData = canvas.toDataURL("image/png");
+      pdf.addImage(imgData, "PNG", 0, 0, 210, 297);
+      pdf.save(`${formik.values.clientName}.pdf`);
+    });
+  };
   const instance = axios.create();
   const payload = {
     senderName: formik.values.senderName,
@@ -117,7 +127,6 @@ const QuotationForms = ({}) => {
     about: formik.values.about,
     tc: formik.values.tc,
     service: formik.values.service,
-    total: formik.values.total,
   };
 
   const navigate = useNavigate();
@@ -433,31 +442,41 @@ const QuotationForms = ({}) => {
           </form>
         </motion.div>
       ) : (
-        <motion.div
-          className="container"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 2 }}
-        >
-          <div className="page">
-            <Header />
-            <hr />
+        <div>
+          <motion.div
+            className="container"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5, duration: 2 }}
+          >
+            <div id="pdf-content">
+              <div className="page">
+                <Header />
+                <hr />
 
-            <SenderReciver payload={formik.values} />
-            <hr />
+                <SenderReciver payload={formik.values} />
+                <hr />
 
-            <About payload={formik.values} />
-            <hr />
-            <Services payload={formik.values} />
+                <About payload={formik.values} />
+                <hr />
+                <Services payload={formik.values} />
 
-            <p className="text-center font-euclidSemibold text-xl text-qblue p-6 mr-10 ">
-              The estimated Amount* is $1200
-            </p>
-            <TC payload={formik.values} />
-            <hr />
-            <Footer />
+                <TC payload={formik.values} />
+                <hr />
+                <Footer />
+              </div>
+            </div>
+          </motion.div>
+          //{" "}
+          <div className="flex justify-center">
+            <button
+              className="border border-qwhite p-2 text-qwhite font-lcSac text-xl "
+              onClick={handlepdf}
+            >
+              // Generate PDF //{" "}
+            </button>
           </div>
-        </motion.div>
+        </div>
       )}
     </Fragment>
   );

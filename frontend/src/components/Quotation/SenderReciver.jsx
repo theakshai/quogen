@@ -17,8 +17,8 @@ const SenderReciver = ({ payload }) => {
           <p className="font-euclidRegular text-qblue">{payload.senderState}</p>
         </div>
         <div id="from" className="p-6">
-          <p className="font-euclidMedium text-qblue">Date</p>
-          <p className="font-euclidRegular text-qblue">02nd July 2023</p>
+          <p className="font-euclidMedium text-qblue"></p>
+          <p className="font-euclidRegular text-qblue"></p>
         </div>
       </div>
     </Fragment>

@@ -12,6 +12,7 @@ const ConvertedQuotation = () => {
       .get("http://localhost:5146/api/quotation/converted")
       .then((response) => {
         setQuotation(response.data);
+        console.log(response.data);
         setdata(true);
       });
   }, []);
@@ -25,6 +26,9 @@ const ConvertedQuotation = () => {
             className="text-qwhite text-center font-lcSac h-40 w-40 border border-qwhite m-4"
           >
             <p className="m-10 text-xl">Quotation</p>
+            <p className=" text-xl text-center">
+              {JSON.stringify(qu.clientName)}
+            </p>
             <p className="m-10 text-xl"></p>
           </div>
         ))}
