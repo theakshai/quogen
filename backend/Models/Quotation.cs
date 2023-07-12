@@ -16,8 +16,12 @@ namespace backend.Models
         public string? CreatedBy { get; set; }
         [Column("service")]
         public string? Service { get; set; }
-        [Column("total_cost")]
-        public int? TotalCost { get; set; }
+        [Column("about")]
+        public string? About { get; set; }
+        [Column("tc")]
+        public string? Tc { get; set; }
+        [Column("client_name")]
+        public string? ClientName { get; set; }
         [Column("client_id")]
         public string? ClientId { get; set; }
         [Column("sender_id")]

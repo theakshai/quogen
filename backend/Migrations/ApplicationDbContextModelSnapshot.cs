@@ -105,9 +105,17 @@ namespace backend.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("quotation_id");
 
+                    b.Property<string>("About")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("about");
+
                     b.Property<string>("ClientId")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("client_id");
+
+                    b.Property<string>("ClientName")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("client_name");
 
                     b.Property<bool?>("Confirmed")
                         .HasColumnType("bit")
@@ -129,9 +137,9 @@ namespace backend.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("service");
 
-                    b.Property<int?>("TotalCost")
-                        .HasColumnType("int")
-                        .HasColumnName("total_cost");
+                    b.Property<string>("Tc")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("tc");
 
                     b.HasKey("QuotationId");
 

@@ -46,7 +46,9 @@ create table Quotations(
 	confirmed bit,
 	created_at datetime,
 	created_by varchar(50),
-	total_cost int,
+	about nvarchar(max),
+	tc nvarchar(max),
+	client_name  varchar(50),
 	service nvarchar(max),
 	client_id varchar(50),
 	sender_id varchar(50),
@@ -72,13 +74,13 @@ create table OrgQuotationMappings(
 
 )
 
-delete from UserOrganisationMappings
-delete from Users
-delete from Authentications
-delete from Organisations
-delete from Quotations
-delete from Senders
-delete from Clients
+	delete from UserOrganisationMappings
+	delete from Users
+	delete from Authentications
+	delete from Organisations
+	delete from Quotations
+	delete from Senders
+	delete from Clients
 
 drop table UserOrganisationMappings
 drop table OrgQuotationMappings

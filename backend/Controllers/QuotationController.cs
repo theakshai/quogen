@@ -73,7 +73,8 @@ namespace backend.Controllers
             Confirmed = qcs.Quotation.Confirmed,
             CreatedAt = qcs.Quotation.CreatedAt,
             CreatedBy = qcs.Quotation.CreatedBy,
-            TotalCost = qcs.Quotation.TotalCost,
+            About = qcs.Quotation.About,
+            Tc = qcs.Quotation.Tc,
             Service = qcs.Quotation.Service,
             ClientId = qcs.Client.Client_id,
             ClientName = qcs.Client.ClientName,
@@ -139,7 +140,7 @@ namespace backend.Controllers
                      await _context.Senders.AddAsync(Sender);
                      await _context.SaveChangesAsync();
 
-                    Console.WriteLine("success servuce and client");
+                    Console.WriteLine("success service and client");
 
                     Guid _QuotationId = Guid.NewGuid();
                     var Quotation = new Quotation
@@ -148,7 +149,9 @@ namespace backend.Controllers
                         Confirmed = false,
                         CreatedAt = DateTime.Now,
                         CreatedBy = UserId,
-                        TotalCost = quotation.TotalCost,
+                        About = quotation.About,
+                        Tc = quotation.Tc,
+                        ClientName = quotation.ClientName,
                         Service = quotation.Service,
                         ClientId = _ClientId.ToString(),
                         SenderId = _SenderId.ToString(),
@@ -181,7 +184,7 @@ namespace backend.Controllers
                 if(Quotation is not null)
                 {
                     Quotation.Confirmed = true;
-                    _context.SaveChangesAsync();
+                     _context.SaveChanges();
                 }
                      return Ok("Confirmed");
             }catch(Exception e)
