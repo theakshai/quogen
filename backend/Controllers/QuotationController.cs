@@ -8,6 +8,10 @@ using System.IdentityModel.Tokens.Jwt;
 using backend.Services;
 using backend.ControllerHelpers;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using System.Net.Mail;
+using System.Net;
+using System.Reflection.Metadata.Ecma335;
+using System.Text;
 
 namespace backend.Controllers
 {
@@ -173,6 +177,8 @@ namespace backend.Controllers
             return _response.Conflict();
 
         }
+
+
 
         [HttpPost("/api/quotation/convert/{id}")]
         public async Task<IActionResult> Convert(string? id)

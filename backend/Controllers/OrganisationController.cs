@@ -8,6 +8,8 @@ using Newtonsoft.Json;
 using backend.Attributes;
 using System.IdentityModel.Tokens.Jwt;
 using backend.ControllerHelpers;
+using System.Net.Mail;
+using System.Net;
 
 namespace backend.Controllers
 {
@@ -146,6 +148,53 @@ namespace backend.Controllers
             }
 
             return _response.Conflict();
+        }
+
+        [NonAction]
+        public void SendEmail(string? Mail, string? orgId)
+        {
+            MailMessage mailMessage = new MailMessage();
+            mailMessage.From = new MailAddress("123004015@sastra.ac.in");
+            mailMessage.To.Add(Mail);
+            mailMessage.Subject = "Subject";
+            string TokenString = Mail + orgId;
+            string token = BCrypt.Net.BCrypt.HashPassword(TokenString);
+            mailMessage.Body = $"http://localhost:5173/signup/{token}"	;
+
+            SmtpClient smtpClient = new SmtpClient();
+            smtpClient.Host = "smtp.gmail.com";
+            smtpClient.Port = 587;
+            smtpClient.UseDefaultCredentials = false;
+            smtpClient.Credentials = new NetworkCredential("123004015@sastra.ac.in", "Sairam2909");
+            smtpClient.EnableSsl = true;
+
+            try
+            {
+                smtpClient.Send(mailMessage);
+                Console.WriteLine("Email Sent Successfully.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
+        }
+
+
+        [HttpPost("/api/organisation/addusermail")]
+        public async Task<IActionResult> AddUserMail(TAddUserMail user)
+        {
+            string Email = user.Email; 
+            string OrgId = user.OrgId;
+            try
+            {
+            SendEmail(Email, OrgId);
+                return Ok();
+            }catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            return Ok();
+            }
+
         }
 
         [HttpPost]
