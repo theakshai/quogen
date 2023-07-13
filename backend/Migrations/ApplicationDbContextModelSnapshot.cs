@@ -173,6 +173,32 @@ namespace backend.Migrations
                     b.ToTable("Senders");
                 });
 
+            modelBuilder.Entity("backend.Models.TempTable", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"));
+
+                    b.Property<string>("Accepted")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("accepted");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("email");
+
+                    b.Property<string>("OrgId")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("org_id");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TempTables");
+                });
+
             modelBuilder.Entity("backend.Models.User", b =>
                 {
                     b.Property<string>("UserId")

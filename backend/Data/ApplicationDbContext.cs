@@ -14,5 +14,6 @@ namespace backend.Data
         public DbSet<Sender> Senders  { get; set; } 
         public DbSet<Quotation> Quotations  { get; set; } 
         public DbSet<UserOrganisationMappings> UserOrganisationMappings  { get; set; } 
+        public DbSet<TempTable> TempTables  { get; set; } 
     }
 }

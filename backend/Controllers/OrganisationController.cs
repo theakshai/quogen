@@ -10,12 +10,16 @@ using System.IdentityModel.Tokens.Jwt;
 using backend.ControllerHelpers;
 using System.Net.Mail;
 using System.Net;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace backend.Controllers
 {
     [ApiController]
     public class OrganisationController : ControllerBase
     {
+        public string  lcSacUrl = "D:\\quogen\\backend\\backend\\public\\fonts\\lcSac.ttf";
+        public string euclidUrl = "D:\\quogen\\backend\\backend\\public\\fonts\\eculidRegular.ttf";
         public IConfiguration? _configuration;
         public ApplicationDbContext? _context;
         ResponseAction _response = new ResponseAction();
@@ -156,10 +160,83 @@ namespace backend.Controllers
             MailMessage mailMessage = new MailMessage();
             mailMessage.From = new MailAddress("123004015@sastra.ac.in");
             mailMessage.To.Add(Mail);
-            mailMessage.Subject = "Subject";
-            string TokenString = Mail + orgId;
-            string token = BCrypt.Net.BCrypt.HashPassword(TokenString);
-            mailMessage.Body = $"http://localhost:5173/signup/{token}"	;
+            mailMessage.Subject = "Gleam: You have been added as member in Gleam Studio";
+            Guid UserId = Guid.NewGuid();
+            var token =UserId.ToString()+ "+" +orgId;
+            string url =  $"http://localhost:5173/newmember/{token}"	;
+            string htmlBody = $@"
+<html lang=""en"">
+    <head>
+    <style>
+        .invite{{
+            height: 30rem;
+            width: 50rem;
+            background-color: #26262e;
+            
+        }}
+        .title{{
+            color: #fcf8f2;
+            text-align: center;
+            padding-top: .8rem;
+        }}
+        .message{{
+            color: #fcf8f2;
+            margin: 2rem;
+        }}
+        .regards{{
+            text-align: left;
+            margin: 2rem;
+            color: #fcf8f2;
+        }}
+
+        .button{{
+ display: inline-block;
+            padding: 10px 20px;
+            background-color: transparent;
+border: 1px solid #fcf8f2;
+            text-decoration: none;
+text-align: center;
+                   }}
+        a{{
+            text-decoration: none;
+            color: #fcf8f2;
+        }}
+        .center{{
+            display: flex;
+            justify-content: center;
+        }}
+
+
+    </style>
+    </head>
+<body>
+    
+    <div class=""invite"">
+        <h1 class=""title"">Welcome to QuoGen</h1>
+        <p class=""message"">
+            You have been added to the Sai Photography organization. We are excited to have you on board!
+
+To accept the membership invitation, please click on the following link:
+
+
+        </p>
+        <div class=""center"">
+        <p class=""button""><a href={url}>Accept</a></p>
+        </div>
+        <p class=""message"">
+If you have any questions or need further information, please feel free to reach out to us.
+        </p>
+        <p class=""regards"">
+            Regards, <br>
+            Sai Photography
+        </p>
+
+    </div>
+</body>
+</html>";
+
+            mailMessage.Body = htmlBody;
+            mailMessage.IsBodyHtml = true;
 
             SmtpClient smtpClient = new SmtpClient();
             smtpClient.Host = "smtp.gmail.com";
@@ -185,10 +262,21 @@ namespace backend.Controllers
         {
             string Email = user.Email; 
             string OrgId = user.OrgId;
+
+
+
             try
             {
-            SendEmail(Email, OrgId);
-                return Ok();
+                var TempUser = new TempTable
+                {
+                    OrgId = OrgId,
+                    Email = Email,
+                    Accepted = "Pending",
+                };
+                await _context.TempTables.AddAsync(TempUser);
+                await _context.SaveChangesAsync();
+                SendEmail(Email, OrgId);
+            return Ok("Email Sent Successfully");
             }catch(Exception e)
             {
                 Console.WriteLine(e.Message);
@@ -199,8 +287,53 @@ namespace backend.Controllers
 
         [HttpPost]
         [Route("/api/organisation/adduser")]
-        public async Task<IActionResult> AddUser()
+        public async Task<IActionResult> AddUser(TNewMember member)
         {
+
+            if(member is not null)
+            {
+                var orgId = member.OrgId;
+                var user = await _context.TempTables.FirstOrDefaultAsync(u => u.OrgId == orgId);
+                var email = "";
+                    if(user is not null)
+                {
+                    email = user.Email;
+                user.Accepted = "accepted";
+                }
+                _context.SaveChanges();
+
+                var pass = BCrypt.Net.BCrypt.HashPassword(member.Password);
+                var Auth = new Authentication
+                {
+                    UserId = member.UserId,
+                    Password = pass,
+                };
+                await _context.Authentications.AddAsync(Auth);
+                await _context.SaveChangesAsync();
+
+                var User = new User
+                {
+                    UserId = member.UserId,
+                    FirstName = member.FirstName,
+                    Email = email,
+                    LastName = member.LastName,
+                    Designation = member.Designation,
+                    CreatedAt = DateTime.Now,
+                };
+                await _context.Users.AddAsync(User);
+                await _context.SaveChangesAsync();
+
+                var mapping = new UserOrganisationMappings
+                {
+                    UserId = member.UserId,
+                    OrganisationId = orgId,
+                };
+                await _context.UserOrganisationMappings.AddAsync(mapping);
+
+                await _context.SaveChangesAsync();
+
+                return Ok("Member Successfully Added");
+            }
             return StatusCode(409, "Not able to add user to the organisation. See logs for more details");
         }
 

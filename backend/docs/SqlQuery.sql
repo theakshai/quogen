@@ -74,6 +74,15 @@ create table OrgQuotationMappings(
 
 )
 
+create table TempTables(
+	 id int primary key identity,
+	 org_id varchar(50),
+	 email varchar(50),
+	 accepted varchar(50),
+)
+
+drop table TempTable
+
 	delete from UserOrganisationMappings
 	delete from Users
 	delete from Authentications
@@ -81,6 +90,7 @@ create table OrgQuotationMappings(
 	delete from Quotations
 	delete from Senders
 	delete from Clients
+	delete from TempTables
 
 drop table UserOrganisationMappings
 drop table OrgQuotationMappings
@@ -91,4 +101,5 @@ drop table Senders
 drop table Authentications
 drop table Quotations
 
-select * from Quotations
+select * from TempTables
+select * from Users
