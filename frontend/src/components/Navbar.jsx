@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import Hamburger from "./Hamburger";
+import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
@@ -11,7 +12,12 @@ const Navbar = () => {
   };
   return (
     <Fragment>
-      <div className="flex sm:justify-around flex-wrap mt-8 justify-between ml-8">
+      <motion.div
+        className="flex sm:justify-around flex-wrap mt-8 justify-between ml-8"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5, duration: 1 }}
+      >
         <div>
           <Link
             to={"/"}
@@ -35,7 +41,7 @@ const Navbar = () => {
             </li>
           ) : null}
         </div>
-      </div>
+      </motion.div>
     </Fragment>
   );
 };

@@ -7,9 +7,8 @@ const DCard = ({ cardName, img }) => {
   const { values } = useContext(QuotationContext);
   console.log(JSON.stringify(values));
   return (
-    <div className=" w-50 h-50 p-6 bg-white border border-qwhite ">
-      <img src={img} alt={cardName} width={100} className="p-4 m-4" />
-      <p className="text-qwhite font-lcSac text-2xl text-center ml-2">
+    <div className="border border-qwhite sm:w-96 sm:m-10">
+      <p className="text-9xl  font-lcSac text-qwhite text-center sm:mt-10 sm:p-10">
         {cardName}
       </p>
     </div>

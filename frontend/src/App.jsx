@@ -16,12 +16,12 @@ import Organisation from "./pages/Organisation";
 import UsersQuotation from "./pages/UsersQuotation";
 import QuotationDashboard from "./pages/QuotationDashboard";
 import ConvertedQuotation from "./pages/ConvertedQuotation";
+import NewMemberForm from "./pages/NewMember";
 
 function App() {
   const location = useLocation();
 
   const excludedEndpoints = [
-    "/dashboard",
     "/quotation",
     "/preview",
     "/organisation/new",
@@ -48,6 +48,8 @@ function App() {
         <Route path="/quotation" element={<QuotationForms />} />
         <Route path="/quotation/:quotationId" element={<QuotationForms />} />
         <Route path="/signup/:quotationId" element={<SignUp />} />
+        <Route path="/newmember/:tokenId" element={<NewMemberForm />} />
+        <Route path="/newmember/" element={<NewMemberForm />} />
         <Route path="/preview" element={<CQuotation />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/dashboard" element={<Dashboard />} />

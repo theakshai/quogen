@@ -36,36 +36,19 @@ const QuotationForms = ({}) => {
   }, [quotationId]);
 
   let ivalue = {};
-  if (dform !== null && dform !== undefined) {
-    console.log(dform);
-    ivalue = {
-      senderName: dform.senderName || "",
-      senderEmail: dform.senderEmail || "",
-      senderMobile: dform.senderMobile || "",
-      senderState: dform.senderState || "",
-      clientName: dform.clientName || "",
-      clientEmail: dform.clientEmail || "",
-      clientMobile: dform.clientMobile || "",
-      clientState: dform.clientState || "",
-      about: dform.about || "",
-      tc: "",
-      service: "",
-    };
-  } else {
-    ivalue = {
-      senderName: "",
-      senderEmail: "",
-      senderMobile: "",
-      senderState: "",
-      clientName: "",
-      clientEmail: "",
-      clientMobile: "",
-      clientState: "",
-      about: "",
-      tc: "",
-      service: "",
-    };
-  }
+  ivalue = {
+    senderName: "",
+    senderEmail: "",
+    senderMobile: "",
+    senderState: "",
+    clientName: "",
+    clientEmail: "",
+    clientMobile: "",
+    clientState: "",
+    about: "",
+    tc: "",
+    service: "",
+  };
 
   const [preview, setPreview] = useState(true);
   const formik = useFormik({

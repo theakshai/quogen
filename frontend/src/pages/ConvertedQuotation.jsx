@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const ConvertedQuotation = () => {
   const navigate = useNavigate();
@@ -18,18 +19,19 @@ const ConvertedQuotation = () => {
   }, []);
 
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 0.5, duration: 2 }}
+    >
       <div className="flex flex-wrap justify-around gap-4 m-10">
         {quotation.map((qu) => (
           <div
             key={qu.quotationId}
-            className="text-qwhite text-center font-lcSac h-40 w-40 border border-qwhite m-4"
+            className="text-qwhite flex text-center font-lcSac justify-around w-9/12 p-4 border border-qwhite m-4"
           >
-            <p className="m-10 text-xl">Quotation</p>
-            <p className=" text-xl text-center">
-              {JSON.stringify(qu.clientName)}
-            </p>
-            <p className="m-10 text-xl"></p>
+            <p className=" text-xl">to: Quotation</p>
+            <p className=" text-xl">To:{JSON.stringify(qu.clientName)}</p>
           </div>
         ))}
       </div>
@@ -43,7 +45,7 @@ const ConvertedQuotation = () => {
           Back
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

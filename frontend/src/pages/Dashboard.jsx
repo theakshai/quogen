@@ -26,8 +26,7 @@ const Dashboard = () => {
           setPresentInOrg(true);
         })
         .catch((error) => {
-          if (error.response.status == 404) {
-          }
+          console.log(error);
         });
     };
 
@@ -42,11 +41,11 @@ const Dashboard = () => {
       animate={{ opacity: 1 }}
       transition={{ delay: 0.5, duration: 2 }}
     >
-      <p className="text-center font-lcSac text-2xl text-qwhite m-4 p-8">
-        <u>Welcome to your personal Dashboard!</u>
+      <p className="text-center font-lcSac text-5xl text-qwhite m-4 p-8">
+        Personal Dashboard
       </p>
       {presentInOrg ? (
-        <div className="flex justify-evenly flex-wrap gap-8">
+        <div className="flex-col justify-around flex-wrap gap-8">
           <Link to="/quotation/all">
             <DCard img={Quotations} cardName={"Quotation"} />
           </Link>
