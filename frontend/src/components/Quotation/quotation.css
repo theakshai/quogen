@@ -1,0 +1,13 @@
+.container{
+    display: flex;
+    justify-content: center;
+}
+.page{
+    width: 21cm;
+    height: 29.7cm;
+    background-color: #fcf8f2;
+}
+.page[layout="potrait"]{
+    width: 29.7cm;
+    height: 21cm;
+}
