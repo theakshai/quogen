@@ -1,0 +1,214 @@
+dotnet watch 🔥 Hot reload enabled. For a list of supported edits, see https://aka.ms/dotnet/hot-reload.
+  💡 Press "Ctrl + R" to restart.
+dotnet watch 🔧 Building...
+  Determining projects to restore...
+D:\quogen\backend\backend\backend.csproj : warning NU1701: Package 'BCrypt.Net 0.1.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project. [D:\quogen\backend\backend\backend.sln]
+  All projects are up-to-date for restore.
+  Unable to use package assets cache due to I/O error. This can occur when the same project is built more than once in parallel. Performance may be degraded, but the build result will not be impacted.
+D:\quogen\backend\backend\backend.csproj : warning NU1701: Package 'BCrypt.Net 0.1.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+D:\quogen\backend\backend\Attributes\CustomAuth.cs(29,51): warning CS8619: Nullability of reference types in value of type 'Tuple<JwtHeader?, JwtPayload?>' doesn't match target type 'Tuple<JwtHeader, JwtPayload>'. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\ControllerHelpers\JWTToken.cs(7,28): warning CS8602: Dereference of a possibly null reference. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\ControllerHelpers\JWTToken.cs(7,28): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\ControllerHelpers\AuthHelper.cs(18,34): warning CS0168: The variable 'ex' is declared but never used [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\ControllerHelpers\AuthHelper.cs(35,30): warning CS0168: The variable 'e' is declared but never used [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\QuotationController.cs(48,30): warning CS0168: The variable 'e' is declared but never used [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\ControllerHelpers\AuthHelper.cs(56,30): warning CS0168: The variable 'e' is declared but never used [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\AuthController.cs(47,34): warning CS0168: The variable 'e' is declared but never used [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Program.cs(33,76): warning CS8604: Possible null reference argument for parameter 's' in 'byte[] Encoding.GetBytes(string s)'. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\AuthController.cs(72,34): warning CS0168: The variable 'e' is declared but never used [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\ClientController.cs(34,30): warning CS0168: The variable 'ex' is declared but never used [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\AuthController.cs(100,34): warning CS0168: The variable 'e' is declared but never used [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\QuotationController.cs(100,30): warning CS0168: The variable 'e' is declared but never used [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\QuotationController.cs(55,42): warning CS1998: This async method lacks 'await' operators and will run synchronously. Consider using the 'await' operator to await non-blocking API calls, or 'await Task.Run(...)' to do CPU-bound work on a background thread. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\OrganisationController.cs(44,34): warning CS0168: The variable 'ex' is declared but never used [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\OrganisationController.cs(61,46): warning CS8602: Dereference of a possibly null reference. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\OrganisationController.cs(67,34): warning CS0168: The variable 'ex' is declared but never used [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\QuotationController.cs(128,36): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\QuotationController.cs(129,58): warning CS8619: Nullability of reference types in value of type 'Tuple<JwtHeader?, JwtPayload?>' doesn't match target type 'Tuple<JwtHeader, JwtPayload>'. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\AuthController.cs(117,50): warning CS8604: Possible null reference argument for parameter 'email' in 'Task<bool> AuthHelper.UserExists(string email, ApplicationDbContext _context)'. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\AuthController.cs(152,34): warning CS0168: The variable 'e' is declared but never used [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\OrganisationController.cs(91,34): warning CS0168: The variable 'e' is declared but never used [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\QuotationController.cs(196,30): warning CS0168: The variable 'e' is declared but never used [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\AuthController.cs(166,52): warning CS8604: Possible null reference argument for parameter 'email' in 'Task<bool> AuthHelper.UserExists(string email, ApplicationDbContext _context)'. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\AuthController.cs(175,78): warning CS8604: Possible null reference argument for parameter '_context' in 'Task<string?> AuthHelper.GetUserId(string email, ApplicationDbContext _context)'. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\AuthController.cs(203,38): warning CS0168: The variable 'ex' is declared but never used [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\AuthController.cs(224,58): warning CS8619: Nullability of reference types in value of type 'Tuple<JwtHeader?, JwtPayload?>' doesn't match target type 'Tuple<JwtHeader, JwtPayload>'. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\QuotationController.cs(214,30): warning CS0168: The variable 'e' is declared but never used [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\QuotationController.cs(203,42): warning CS1998: This async method lacks 'await' operators and will run synchronously. Consider using the 'await' operator to await non-blocking API calls, or 'await Task.Run(...)' to do CPU-bound work on a background thread. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\OrganisationController.cs(113,48): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\OrganisationController.cs(114,70): warning CS8619: Nullability of reference types in value of type 'Tuple<JwtHeader?, JwtPayload?>' doesn't match target type 'Tuple<JwtHeader, JwtPayload>'. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\OrganisationController.cs(122,48): warning CS8602: Dereference of a possibly null reference. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\OrganisationController.cs(138,76): warning CS8604: Possible null reference argument for parameter 'userId' in 'dynamic JWTTokenGenerator.CreateAdminToken(string userId, string orgId, IConfiguration configuration)'. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\OrganisationController.cs(138,101): warning CS8604: Possible null reference argument for parameter 'configuration' in 'dynamic JWTTokenGenerator.CreateAdminToken(string userId, string orgId, IConfiguration configuration)'. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\OrganisationController.cs(145,38): warning CS0168: The variable 'e' is declared but never used [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\AuthController.cs(239,36): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\AuthController.cs(240,58): warning CS8619: Nullability of reference types in value of type 'Tuple<JwtHeader?, JwtPayload?>' doesn't match target type 'Tuple<JwtHeader, JwtPayload>'. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\AuthController.cs(253,46): warning CS8602: Dereference of a possibly null reference. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\OrganisationController.cs(160,32): warning CS8604: Possible null reference argument for parameter 'addresses' in 'void MailAddressCollection.Add(string addresses)'. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\OrganisationController.cs(190,28): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\OrganisationController.cs(191,28): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\OrganisationController.cs(203,23): warning CS8602: Dereference of a possibly null reference. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Middelware\JWTTokenChecker.cs(17,28): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\OrganisationController.cs(223,34): warning CS8602: Dereference of a possibly null reference. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\OrganisationController.cs(273,46): warning CS8602: Dereference of a possibly null reference. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\OrganisationController.cs(281,34): warning CS0168: The variable 'ex' is declared but never used [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\OrganisationController.cs(293,42): warning CS1998: This async method lacks 'await' operators and will run synchronously. Consider using the 'await' operator to await non-blocking API calls, or 'await Task.Run(...)' to do CPU-bound work on a background thread. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Services\JWTService\JWTTokenGenerator.cs(17,46): warning CS8604: Possible null reference argument for parameter 's' in 'byte[] Encoding.GetBytes(string s)'. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\OrganisationController.cs(306,46): warning CS8602: Dereference of a possibly null reference. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Controllers\OrganisationController.cs(314,34): warning CS0168: The variable 'ex' is declared but never used [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Services\JWTService\JWTTokenGenerator.cs(50,46): warning CS8604: Possible null reference argument for parameter 's' in 'byte[] Encoding.GetBytes(string s)'. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Services\JWTService\JWTTokenGenerator.cs(83,46): warning CS8604: Possible null reference argument for parameter 's' in 'byte[] Encoding.GetBytes(string s)'. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Services\JWTService\JWTTokenDecoder.cs(15,21): warning CS8619: Nullability of reference types in value of type 'Tuple<JwtHeader, JwtPayload>' doesn't match target type 'Tuple<JwtHeader?, JwtPayload?>'. [D:\quogen\backend\backend\backend.csproj]
+D:\quogen\backend\backend\Services\JWTService\JWTTokenDecoder.cs(17,20): warning CS8603: Possible null reference return. [D:\quogen\backend\backend\backend.csproj]
+  backend -> D:\quogen\backend\backend\bin\Debug\net7.0\backend.dll
+dotnet watch 🚀 Started
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://localhost:5146
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Development
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: D:\quogen\backend\backend
+warn: Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware[3]
+      Failed to determine the https port for redirect.
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (106ms) [Parameters=[@p0='?' (Size = 4000), @p1='?' (Size = 4000), @p2='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+      SET IMPLICIT_TRANSACTIONS OFF;
+      SET NOCOUNT ON;
+      INSERT INTO [TempTables] ([accepted], [email], [org_id])
+      OUTPUT INSERTED.[id]
+      VALUES (@p0, @p1, @p2);
+Email Sent Successfully.
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (9ms) [Parameters=[@__orgId_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+      SELECT TOP(1) [t].[id], [t].[accepted], [t].[email], [t].[org_id]
+      FROM [TempTables] AS [t]
+      WHERE [t].[org_id] = @__orgId_0
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (5ms) [Parameters=[@p1='?' (DbType = Int32), @p0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+      SET IMPLICIT_TRANSACTIONS OFF;
+      SET NOCOUNT ON;
+      UPDATE [TempTables] SET [accepted] = @p0
+      OUTPUT 1
+      WHERE [id] = @p1;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (39ms) [Parameters=[@p0='?' (Size = 450), @p1='?' (Size = 4000), @p2='?' (Size = 4000), @p3='?' (Size = 4000), @p4='?' (Size = 450), @p5='?' (DbType = DateTime2), @p6='?' (Size = 4000), @p7='?' (Size = 4000), @p8='?' (Size = 4000), @p9='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+      SET NOCOUNT ON;
+      INSERT INTO [Authentications] ([user_id], [password])
+      VALUES (@p0, @p1);
+      INSERT INTO [UserOrganisationMappings] ([organisation_id], [user_id])
+      OUTPUT INSERTED.[id]
+      VALUES (@p2, @p3);
+      INSERT INTO [Users] ([user_id], [created_at], [designation], [email], [first_name], [last_name])
+      VALUES (@p4, @p5, @p6, @p7, @p8, @p9);
+fail: Microsoft.EntityFrameworkCore.Update[10000]
+      An exception occurred in the database while saving changes for context type 'backend.Data.ApplicationDbContext'.
+      Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+       ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The INSERT statement conflicted with the FOREIGN KEY constraint "FK__UserOrgan__user___6B79F03D". The conflict occurred in database "QuoGen", table "dbo.Users", column 'user_id'.
+         at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+         at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+         at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+         at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+         at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+         at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+         at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+         at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderAsyncCallContext`1 context)
+      --- End of stack trace from previous location ---
+         at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+      ClientConnectionId:21b61ef0-3ea8-4e9b-a5ef-7010aa7e98de
+      Error Number:547,State:0,Class:16
+         --- End of inner exception stack trace ---
+         at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+      Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+       ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The INSERT statement conflicted with the FOREIGN KEY constraint "FK__UserOrgan__user___6B79F03D". The conflict occurred in database "QuoGen", table "dbo.Users", column 'user_id'.
+         at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+         at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+         at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+         at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+         at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+         at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+         at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+         at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderAsyncCallContext`1 context)
+      --- End of stack trace from previous location ---
+         at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+      ClientConnectionId:21b61ef0-3ea8-4e9b-a5ef-7010aa7e98de
+      Error Number:547,State:0,Class:16
+         --- End of inner exception stack trace ---
+         at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+fail: Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware[1]
+      An unhandled exception has occurred while executing the request.
+      Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+       ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The INSERT statement conflicted with the FOREIGN KEY constraint "FK__UserOrgan__user___6B79F03D". The conflict occurred in database "QuoGen", table "dbo.Users", column 'user_id'.
+         at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+         at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+         at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+         at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+         at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+         at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+         at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+         at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderAsyncCallContext`1 context)
+      --- End of stack trace from previous location ---
+         at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+      ClientConnectionId:21b61ef0-3ea8-4e9b-a5ef-7010aa7e98de
+      Error Number:547,State:0,Class:16
+         --- End of inner exception stack trace ---
+         at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+         at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+         at backend.Controllers.OrganisationController.AddUser(TNewMember member) in D:\quogen\backend\backend\Controllers\OrganisationController.cs:line 258
+         at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+         at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+         at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+         at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+         at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+         at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+         at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+         at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+         at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+         at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+         at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+         at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+         at backend.Middleware.JWTTokenChecker.InvokeAsync(HttpContext context) in D:\quogen\backend\backend\Middelware\JWTTokenChecker.cs:line 24
+         at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+         at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+         at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+dotnet watch ⌚ File changed: .\Controllers\OrganisationController.cs.
+dotnet watch ⌚ Failed to create MSBuildWorkspace: [Failure] Msbuild failed when processing the file 'D:\quogen\backend\backend\backend.csproj' with message: D:\quogen\backend\backend\backend.csproj: (0, 0): Package 'BCrypt.Net 0.1.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+  ❔ Do you want to restart your app - Yes (y) / No (n) / Always (a) / Never (v)?
+  ❔ info: Microsoft.Hosting.Lifetime[0]
+      Application is shutting down...
+dotnet watch 🛑 Shutdown requested. Press Ctrl+C again to force exit.
+
