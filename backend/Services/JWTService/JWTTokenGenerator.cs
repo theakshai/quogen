@@ -75,7 +75,7 @@ namespace backend.Services
             return jwtToken;
 
         }
-        public static dynamic CreateOrgUserToken(string userId, dynamic? user, string orgId, IConfiguration configuration)
+        public static dynamic CreateOrgUserToken(string userId, string? email, string orgId, IConfiguration configuration)
         {
 
             var issuer = configuration["Jwt:Issuer"];
@@ -87,12 +87,13 @@ namespace backend.Services
                                 );
             var subject = new ClaimsIdentity(new[]
             {
-                new Claim("Email", user?.Email),
+                new Claim("Email", email),
                 new Claim("UserId", userId),
                 new Claim("OrgId", orgId),
-                new Claim(ClaimTypes.Role,"user"),
+                new Claim(ClaimTypes.Role,"member"),
 
             }) ;
+            Console.WriteLine("Calling This with token");
             var expires = DateTime.UtcNow.AddDays(2);
             var tokenDescriptor = new SecurityTokenDescriptor
             {

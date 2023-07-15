@@ -102,4 +102,5 @@ drop table Authentications
 drop table Quotations
 
 select * from TempTables
-select * from Users
+select * from Quotations
+select * from TempTables

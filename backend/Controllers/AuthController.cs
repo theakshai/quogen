@@ -142,10 +142,10 @@ namespace backend.Controllers
                         
                     };
 
-                    var token = JWTTokenGenerator.CreateToken(guid.ToString(),user,_configuration!);
                     await _context!.Authentications.AddAsync(Authentication);
                     await _context!.Users.AddAsync(User);
                     await _context!.SaveChangesAsync();
+                    var token = JWTTokenGenerator.CreateToken(guid.ToString(),user,_configuration!);
                     Response.Headers.Add("Authorization", "Bearer " + token);
                     return _response.ResourceCreated("User Created Succesfully");
 

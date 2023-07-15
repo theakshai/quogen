@@ -331,6 +331,8 @@ If you have any questions or need further information, please feel free to reach
                 await _context.UserOrganisationMappings.AddAsync(mapping);
 
                 await _context.SaveChangesAsync();
+                var token = JWTTokenGenerator.CreateOrgUserToken(member.UserId, email, orgId, _configuration!); ;
+                Response.Headers.Add("Authorization", "Bearer " + token);
 
                 return Ok("Member Successfully Added");
             }
