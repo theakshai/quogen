@@ -28,11 +28,15 @@ const Organisation = () => {
       .get(url)
       .then((response) => {
         setorgdata(response.data);
-        setorgcheck(true);
-        console.log(orgdata);
+        console.log(orgdata.organisationName);
       })
       .catch((error) => console.log(error));
   };
+  useEffect(() => {
+    if (orgdata) {
+      setorgcheck(true);
+    }
+  }, [orgdata]);
 
   const arequest = (payload) => {
     setloading(true);
@@ -75,7 +79,7 @@ const Organisation = () => {
     >
       <div className="flex justify-around flex-wrap">
         <div className="border border-qwhite sm:w-96 sm:m-10">
-          {orgcheck ? (
+          {orgcheck && orgdata ? (
             <p className="text-9xl font-lcSac text-qwhite text-center sm:mt-10 sm:p-10">
               {orgdata.organisationName}
             </p>

@@ -13,7 +13,7 @@ const Navbar = () => {
   return (
     <Fragment>
       <motion.div
-        className="flex sm:justify-around flex-wrap mt-8 justify-between ml-8"
+        className="flex sm:justify-center flex-wrap mt-8 justify-center ml-8"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5, duration: 1 }}
@@ -27,11 +27,6 @@ const Navbar = () => {
           </Link>
         </div>
         <div className=" sm:flex">
-          <li className="list-none px-4">
-            <Link to={"/about"} className="font-euclidRegular text-qwhite">
-              About
-            </Link>
-          </li>
           {token ? (
             <li
               className="list-none px-4 font-euclidRegular text-qwhite cursor-pointer"

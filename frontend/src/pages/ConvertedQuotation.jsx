@@ -28,10 +28,10 @@ const ConvertedQuotation = () => {
         {quotation.map((qu) => (
           <div
             key={qu.quotationId}
-            className="text-qwhite flex text-center font-lcSac justify-around w-9/12 p-4 border border-qwhite m-4"
+            className="text-qwhite flex-col text-center font-lcSac justify-around w-80  p-10 border border-qwhite m-4"
           >
-            <p className=" text-xl">to: Quotation</p>
-            <p className=" text-xl">To:{JSON.stringify(qu.clientName)}</p>
+            <p className=" text-xl">Client</p>
+            <p className=" text-xl">{qu.clientName}</p>
           </div>
         ))}
       </div>

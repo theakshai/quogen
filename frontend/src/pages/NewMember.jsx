@@ -35,6 +35,9 @@ const NewMemberForm = ({ userProfile }) => {
     await axios
       .post("http://localhost:5146/api/organisation/adduser", payload)
       .then((response) => {
+        let authHeader = response.headers["authorization"];
+        const token = authHeader ? authHeader.replace("Bearer", "") : null;
+        localStorage.setItem("token", token);
         console.log(response.data);
       })
       .catch((error) => {
@@ -74,7 +77,7 @@ const NewMemberForm = ({ userProfile }) => {
               password: values.password,
             };
             createmember(payload);
-            navigate("/login");
+            navigate("/dashboard");
           }}
         >
           {({ errors, touched }) => (

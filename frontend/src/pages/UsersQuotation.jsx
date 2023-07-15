@@ -130,39 +130,29 @@ const UsersQuotation = () => {
           transition={{ delay: 0.5, duration: 2 }}
         >
           <div className=" flex flex-wrap justify-around gap-4 m-10">
-            <div className="text-qwhite flex text-center font-lcSac justify-around w-9/12 p-4 border-b-2 border-qwhite m-4">
-              <p className=" text-xl">Quotation</p>
-              <p className=" text-xl">ClientName</p>
-              <button className="cursor-pointer  font-euclidRegular">
-                Click to Convert
-              </button>
-              <button
-                type="button"
-                className="cursor-pointer  font-euclidRegular"
-              >
-                Click to View
-              </button>
-            </div>
             {quotation.map((qu) => (
               <div
                 key={qu.quotationId}
-                className="text-qwhite flex text-center font-lcSac justify-around w-9/12 p-4 border-b-2 border-qwhite m-4"
+                className="text-qwhite flex-col text-center font-lcSac justify-around w-80  p-10 border border-qwhite m-4"
               >
-                <p className=" text-xl">Quotation</p>
-                <p className=" text-xl">{JSON.stringify(qu.clientName)}</p>
-                <button
-                  className="cursor-pointer underline font-euclidRegular"
-                  onClick={() => handleConvert(qu.quotationId)}
-                >
-                  Convert
-                </button>
-                <button
-                  type="button"
-                  className="cursor-pointer underline font-euclidRegular"
-                  onClick={() => openModal(qu.quotationId)}
-                >
-                  View
-                </button>
+                <p className=" text-center text-4xl m-2">{qu.clientName}</p>
+                <div className="flex justify-center gap-4">
+                  {qu.confirmed === false ? (
+                    <button
+                      className="cursor-pointer border border-qwhite h-10 p-2 font-euclidRegular"
+                      onClick={() => handleConvert(qu.quotationId)}
+                    >
+                      Convert
+                    </button>
+                  ) : null}
+                  <button
+                    type="button"
+                    className="cursor-pointer border border-qwhite h-10 p-2 font-euclidRegular"
+                    onClick={() => openModal(qu.quotationId)}
+                  >
+                    View
+                  </button>
+                </div>
               </div>
             ))}
           </div>

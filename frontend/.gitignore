@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 
 .mailing
+
+# Local Netlify folder
+.netlify

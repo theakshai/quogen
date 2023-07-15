@@ -18,10 +18,10 @@ const Home = () => {
           </div>
           <div className="pt-8">
             <p className="font-euclidRegular text-qwhite ">
-              Tired of Fancy Quotation generator?
+              Personal Tool for Quotation Generation!
             </p>
             <p className="font-euclidRegular text-qwhite ">
-              Welcome to QuoGen an aesthetic quotation generator for photography
+              Welcome to QuoGen an aesthetic quotation generator for Gleam
               studios.
             </p>
           </div>
