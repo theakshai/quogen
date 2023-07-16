@@ -177,14 +177,26 @@ namespace backend.Controllers
 
                         if (UserId != null && HashedPassword != null) 
                         {
+                            
 
                             try
                             {
+
+                                var UserInOrg = await _context.UserOrganisationMappings.FirstOrDefaultAsync(u => u.UserId == UserId);
+
+
                                 bool isMatch = BCrypt.Net.BCrypt.Verify(user.Password, HashedPassword);
                                 if (isMatch)
                                 {
+                                 if(UserInOrg is not null)
+                                    {
+                                 var tokens = JWTTokenGenerator.CreateOrgUserToken(UserId,user.Email, UserInOrg.OrganisationId, _configuration!);
+                                 Response.Headers.Add("Authorization", "Bearer " + tokens);
+                                    }
+                                    else { 
                                  var token = JWTTokenGenerator.CreateToken(UserId, user, _configuration!);
                                  Response.Headers.Add("Authorization", "Bearer " + token);
+}
 
                                  return _response.OK("User Logged in Successfully");
 
@@ -259,6 +271,35 @@ namespace backend.Controllers
             return Ok();
         }
 
+        [HttpPut("/api/signup")]
+        public async Task<IActionResult> UpdateProfile([FromBody] TUserAuth user)
+        {
+            if(user is not null) 
+            {
+                if(await _authHelper!.UserExists(user?.Email, _context!)) 
+                {
+                    try
+                    {
+                    var User = await _context.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
+
+                        Console.WriteLine("The username is"+User.FirstName);
+                    User.FirstName = user.FirstName;
+                    User.LastName = user.LastName;
+                    User.Designation = user.Designation;
+                    User.Email = user.Email;
+                        await _context.SaveChangesAsync();
+                        return Ok("User Updated Successfully");
+
+                    }catch(Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+
+                }
+                return _response.NotFound("User Not Found");
+            }
+                return _response.NotFound("User Not Found");
+        }
 
     }
 }

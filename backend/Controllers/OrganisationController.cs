@@ -339,6 +339,67 @@ If you have any questions or need further information, please feel free to reach
             return StatusCode(409, "Not able to add user to the organisation. See logs for more details");
         }
 
+
+
+        [HttpGet("/api/organisation/members/{orgId}")]
+
+        public async Task<IActionResult> OrgMember(string? orgId)
+        {
+            if(orgId is not null)
+            {
+                try
+                {
+                 //   var OrgMembers = await _context.UserOrganisationMappings.Where(o => o.OrganisationId == orgId).ToListAsync();
+                    var OrgMembers = await _context.UserOrganisationMappings
+        .Where(uom => uom.OrganisationId == orgId)
+        .Join(_context.Users,
+            uom => uom.UserId,
+            u => u.UserId,
+            (uom, u) => new
+            {
+                u.UserId,
+                u.FirstName,
+                u.LastName,
+                u.Designation,
+                u.CreatedAt
+            })
+        .ToListAsync();
+                    if (OrgMembers is not null)
+                    {
+                        return Ok(OrgMembers);
+                    }
+                    return _response.NotFound("No org Members found");
+                }catch(Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+                    return _response.NotFound("No org Members found");
+
+        }
+        [HttpGet("/api/organisation/quotations/{orgId}")]
+
+        public async Task<IActionResult> OrgQuotation(string? orgId)
+        {
+            if(orgId is not null)
+            {
+                try
+                {
+                    var OrgQuotations = await _context.OrgQuotationMappings.Where(o => o.OrganisationId == orgId).ToListAsync();
+                    if(OrgQuotations is not null)
+                    {
+                        return Ok(OrgQuotations);
+                    }
+                    return _response.NotFound("No org Quotations found");
+                }catch(Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+                    return _response.NotFound("No org Quotations found");
+
+        }
+
         [HttpDelete]
         [Route("/api/organisation/{id}")]
         public async Task<IActionResult> DelelteOrganistaion(string? id)

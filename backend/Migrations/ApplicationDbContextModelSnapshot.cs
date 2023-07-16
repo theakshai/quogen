@@ -64,6 +64,28 @@ namespace backend.Migrations
                     b.ToTable("Clients");
                 });
 
+            modelBuilder.Entity("backend.Models.OrgQuotationMappings", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"));
+
+                    b.Property<string>("OrganisationId")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("organisation_id");
+
+                    b.Property<string>("QuotationId")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("quotation_id");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OrgQuotationMappings");
+                });
+
             modelBuilder.Entity("backend.Models.Organisation", b =>
                 {
                     b.Property<string>("OrganistationId")
