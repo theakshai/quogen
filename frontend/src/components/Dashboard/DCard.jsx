@@ -8,7 +8,7 @@ const DCard = ({ cardName, img }) => {
   console.log(JSON.stringify(values));
   return (
     <div className="border border-qwhite sm:w-96 sm:m-10">
-      <p className="text-9xl  font-lcSac text-qwhite text-center sm:mt-10 sm:p-10">
+      <p className="text-9xl  font-lcSac text-qblack text-center sm:mt-10 sm:p-10">
         {cardName}
       </p>
     </div>

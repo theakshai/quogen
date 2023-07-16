@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import Quote from "../components/Quote";
 import Search from "../components/Search";
+import quote from "../assets/Quota.jpg";
 
 const UsersQuotation = () => {
   const navigate = useNavigate();
@@ -97,25 +98,28 @@ const UsersQuotation = () => {
         transition={{ delay: 0.5, duration: 2 }}
         className="flex justify-between p-10"
       >
-        <h1 className="text-qwhite text-center font-lcSac border border-qwhite p-2 w-80  text-xl m-10">
+        <div className="fixed -z-20 inset-0  flex items-center justify-center">
+          <img src={quote} alt="" />
+        </div>
+        <h1 className="text-qblack text-center font-lcSac border border-qblack p-2 w-80  text-xl m-10">
           Total Quotations Generated: {quotation.length}
         </h1>
         <div>
           <button
             type="button"
-            className="text-xl p-2 m-10 border border-qwhite font-lcSac text-qwhite"
+            className="text-xl p-2 m-10 border border-qblack font-lcSac text-qblack"
             onClick={openSearch}
           >
             Search
           </button>
           <button
-            className="text-xl p-2 m-10 border border-qwhite font-lcSac text-qwhite"
+            className="text-xl p-2 m-10 border border-qblack font-lcSac text-qblack"
             onClick={() => navigate("/quotation/")}
           >
             Create New +{" "}
           </button>
           <button
-            className="text-xl p-2 m-10 border border-qwhite font-lcSac text-qwhite"
+            className="text-xl p-2 m-10 border border-qblack font-lcSac text-qblack"
             onClick={() => navigate("/quotation/converted")}
           >
             Converted
@@ -133,13 +137,13 @@ const UsersQuotation = () => {
             {quotation.map((qu) => (
               <div
                 key={qu.quotationId}
-                className="text-qwhite flex-col text-center font-lcSac justify-around w-80  p-10 border border-qwhite m-4"
+                className="text-qblack flex-col text-center font-lcSac justify-around w-80  p-10 border border-qblack m-4"
               >
                 <p className=" text-center text-4xl m-2">{qu.clientName}</p>
                 <div className="flex justify-center gap-4">
                   {qu.confirmed === false ? (
                     <button
-                      className="cursor-pointer border border-qwhite h-10 p-2 font-euclidRegular"
+                      className="cursor-pointer border border-qblack h-10 p-2 font-euclidRegular"
                       onClick={() => handleConvert(qu.quotationId)}
                     >
                       Convert
@@ -147,7 +151,7 @@ const UsersQuotation = () => {
                   ) : null}
                   <button
                     type="button"
-                    className="cursor-pointer border border-qwhite h-10 p-2 font-euclidRegular"
+                    className="cursor-pointer border border-qblack h-10 p-2 font-euclidRegular"
                     onClick={() => openModal(qu.quotationId)}
                   >
                     View
@@ -163,7 +167,7 @@ const UsersQuotation = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 2 }}
         >
-          <h1 className="text-qwhite p-10 mt-10 font-lcSac text-4xl text-center">
+          <h1 className="text-qblack p-10 mt-10 font-lcSac text-4xl text-center">
             No Quotation data.To create quotation click{" "}
             <Link to={"/quotation"}>
               <u>here</u>
@@ -177,7 +181,7 @@ const UsersQuotation = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5, duration: 2 }}
       >
-        <div className="text-qwhite font-lcSac text-2xl text-center">
+        <div className="text-qblack font-lcSac text-2xl text-center">
           If there is no quotation visible, check in the converted or create new
         </div>
       </motion.div>

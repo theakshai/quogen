@@ -15,8 +15,10 @@ import PDFGenerator from "./PDFGenerator";
 import { Link, Navigate, json, useNavigate, useParams } from "react-router-dom";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import bg from "../assets/client.jpg";
 
 const QuotationForms = ({}) => {
+  const pdfpayload = "";
   const { quotationId } = useParams();
   const [dform, setdform] = useState();
   const url = `http://localhost:5146/api/quotation/${quotationId}`;
@@ -95,6 +97,27 @@ const QuotationForms = ({}) => {
       const imgData = canvas.toDataURL("image/png");
       pdf.addImage(imgData, "PNG", 0, 0, 210, 297);
       pdf.save(`${formik.values.clientName}.pdf`);
+      const pdfBlob = pdf.output("blob");
+      const convertBlobToDataURL = (blob) => {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(blob);
+        });
+      };
+
+      // Convert Blob to Data URL and handle the result
+      convertBlobToDataURL(pdfBlob)
+        .then((pdfData) => {
+          // Print the value of pdfData for debugging
+          console.log(pdfData);
+
+          // Do whatever you want with the pdfData
+        })
+        .catch((error) => {
+          // Handle any errors
+        });
     });
   };
   const instance = axios.create();
@@ -143,6 +166,9 @@ const QuotationForms = ({}) => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 2 }}
         >
+          <div className="fixed -z-20 inset-0  flex items-center justify-center">
+            <img src={bg} alt="" />
+          </div>
           <form onSubmit={formik.handleSubmit}>
             <div className="flex justify-evenly flex-wrap p-4 m-2">
               <div>

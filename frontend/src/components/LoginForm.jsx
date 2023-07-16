@@ -22,7 +22,7 @@ const LoginForm = () => {
         let authHeader = response.headers["authorization"];
         const token = authHeader ? authHeader.replace("Bearer", "") : null;
         localStorage.setItem("token", token);
-        navigate("/signup");
+        navigate("/dashboard");
       })
       .catch((error) => {
         if (error.response.status == 404) {
@@ -44,7 +44,7 @@ const LoginForm = () => {
 
   return (
     <div>
-      <p className="text-center font-lcSac text-2xl text-qwhite m-4">
+      <p className="text-center font-lcSac text-2xl text-qblack m-4">
         Glad to see you again!
       </p>
       <Formik
@@ -67,23 +67,23 @@ const LoginForm = () => {
               name="email"
               type="email"
               placeholder="Email"
-              className="font-lcSac text-qwhite bg-qblue block mb-4 w-80 h-10 p-2 outline-none border border-qwhite"
+              className="font-lcSac text-qblack  block mb-4 w-80 h-10 p-2 outline-none "
             />
             {errors.email && touched.email ? (
-              <div className="text-qwhite font-lcSac">{errors.email}</div>
+              <div className="text-qblack font-lcSac">{errors.email}</div>
             ) : null}
             <Field
               name="password"
               type="password"
               placeholder="Password"
-              className="font-lcSac text-qwhite bg-qblue block mb-4 w-80 h-10 p-2 outline-none border border-qwhite"
+              className="font-lcSac text-qblack block mb-4 w-80 h-10 p-2 outline-none "
             />
             {errors.password && touched.password ? (
-              <div className="text-qwhite font-lcSac">{errors.password}</div>
+              <div className="text-qblack font-lcSac">{errors.password}</div>
             ) : null}
             <button
               type="submit"
-              className="border border-qwhite w-60 h-10 font-lcSac ml-10 text-qwhite rounded-sm"
+              className="bg-qblack w-60 h-10 font-lcSac ml-10 text-qwhite rounded-sm"
             >
               Submit
             </button>

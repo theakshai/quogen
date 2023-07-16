@@ -4,6 +4,7 @@ import { Fragment } from "react";
 import { useJwt } from "react-jwt";
 import axios from "axios";
 import SignUpForm from "../components/SignUpForm";
+import bg from "../assets/prof.jpg";
 
 const Profile = () => {
   const token = localStorage.getItem("token");
@@ -41,7 +42,10 @@ const Profile = () => {
   return (
     <Fragment>
       <div>
-        <p className="text-center font-lcSac text-5xl text-qwhite m-10 p-8">
+        <div className="fixed -z-20 inset-0  flex items-center justify-center">
+          <img src={bg} alt="" />
+        </div>
+        <p className="text-center font-lcSac text-5xl text-qorange m-10 p-8">
           Edit the details to be changed!
         </p>
       </div>

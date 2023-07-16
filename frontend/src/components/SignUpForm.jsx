@@ -30,7 +30,7 @@ const SignUpForm = ({ userProfile }) => {
       .post("http://localhost:5146/api/signup", payload)
       .then((response) => {
         let authHeader = response.headers["authorization"];
-        const token = authHeader ? authHeader.replace("Bearer", "") : null;
+        const token = authHeader ? authHeader.replace("Bearer ", "") : null;
         localStorage.setItem("token", token);
       })
       .catch((error) => {
@@ -40,7 +40,7 @@ const SignUpForm = ({ userProfile }) => {
 
   return (
     <div>
-      <p className="text-center font-lcSac text-2xl text-qwhite m-4">
+      <p className="text-center font-lcSac text-2xl text-qblack m-4">
         Welcome to QuoGen!
       </p>
       <Formik
@@ -70,50 +70,50 @@ const SignUpForm = ({ userProfile }) => {
               name="firstName"
               type="text"
               placeholder="First Name"
-              className="font-lcSac text-qwhite bg-qblue block mb-4 w-80 h-10 p-2 outline-none border border-qwhite"
+              className="font-lcSac text-qblack  block mb-4 w-80 h-10 p-2 outline-none border border-qblack"
             />
             {touched.firstName && errors.firstName ? (
-              <div className="font-lcSac text-qwhite">{errors.firstName}</div>
+              <div className="font-lcSac text-qblack">{errors.firstName}</div>
             ) : null}
             <Field
               name="lastName"
               type="text"
               placeholder="Last Name"
-              className="font-lcSac text-qwhite bg-qblue block mb-4 w-80 h-10 p-2 outline-none border border-qwhite"
+              className="font-lcSac text-qblack  block mb-4 w-80 h-10 p-2 outline-none border border-qblack"
             />
             {touched.lastName && errors.lastName ? (
-              <div className="font-lcSac text-qwhite">{errors.lastName}</div>
+              <div className="font-lcSac text-qblack">{errors.lastName}</div>
             ) : null}
             <Field
               name="email"
               type="email"
               placeholder="Email"
-              className="font-lcSac text-qwhite bg-qblue block mb-4 w-80 h-10 p-2 outline-none border border-qwhite"
+              className="font-lcSac text-qblack  block mb-4 w-80 h-10 p-2 outline-none border border-qblack"
             />
             {errors.email && touched.email ? (
-              <div className="font-lcSac text-qwhite">{errors.email}</div>
+              <div className="font-lcSac text-qblack">{errors.email}</div>
             ) : null}
             <Field
               name="designation"
               type="text"
               placeholder="Designation: Ex: Sales Manager, HR etc.,"
-              className="font-lcSac text-qwhite bg-qblue block mb-4 w-80 h-10 p-2 outline-none border border-qwhite"
+              className="font-lcSac text-qblack  block mb-4 w-80 h-10 p-2 outline-none border border-qblack"
             />
             {touched.designation && errors.designation ? (
-              <div className="font-lcSac text-qwhite">{errors.designation}</div>
+              <div className="font-lcSac text-qblack">{errors.designation}</div>
             ) : null}
             <Field
               name="password"
               type="text"
               placeholder="Password"
-              className="font-lcSac text-qwhite bg-qblue block mb-4 w-80 h-10 p-2 outline-none border border-qwhite"
+              className="font-lcSac text-qblack  block mb-4 w-80 h-10 p-2 outline-none border border-qblack"
             />
             {touched.password && errors.password ? (
-              <div className="font-lcSac text-qwhite">{errors.password}</div>
+              <div className="font-lcSac text-qblack">{errors.password}</div>
             ) : null}
             <button
               type="submit"
-              className="border border-qwhite w-60 h-10 font-lcSac ml-10 text-qwhite rounded-sm"
+              className="  bg-qblack w-60 h-10 font-lcSac ml-10 text-qwhite rounded-sm"
             >
               Submit
             </button>
@@ -122,7 +122,7 @@ const SignUpForm = ({ userProfile }) => {
       </Formik>
       <button
         type="submit"
-        className="border border-qwhite w-60 h-10 font-lcSac ml-10 mt-5 text-qwhite rounded-sm"
+        className=" bg-qblack w-60 h-10 font-lcSac ml-10 mt-5 text-qwhite rounded-sm"
         onClick={() => navigate(-1)}
       >
         Cancel

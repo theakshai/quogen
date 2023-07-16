@@ -9,6 +9,7 @@ import { useJwt } from "react-jwt";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import dashboard from "../assets/dashboard.png";
+import bg from "../assets/Dash.jpg";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -41,7 +42,10 @@ const Dashboard = () => {
       animate={{ opacity: 1 }}
       transition={{ delay: 0.5, duration: 2 }}
     >
-      <p className="text-center font-lcSac text-5xl text-qwhite m-4 p-8">
+      <div className="fixed -z-20 inset-0  flex items-center justify-center">
+        <img src={bg} alt="" />
+      </div>
+      <p className="text-center font-lcSac text-5xl text-qblack m-4 p-8">
         Personal Dashboard
       </p>
       {presentInOrg ? (
@@ -59,15 +63,12 @@ const Dashboard = () => {
       ) : (
         <div>
           <Link to={"/organisation/new"}>
-            <p className="font-lcSac text-center text-qwhite cursor-pointer text-2xl border border-qwhite p-2 m-10">
+            <p className="font-lcSac text-center text-qblack cursor-pointer text-2xl border border-qblack p-2 m-10">
               Add Organisation +
             </p>
           </Link>
-          <p className="text-center font-euclidRegular text-xl text-qwhite m-4 p-8">
-            <u>
-              Note: To quotation to be stored and editable, create an
-              organisation.
-            </u>
+          <p className="text-center font-euclidMedium text-xl text-qblack m-4 p-8">
+            <u>Note: To quotation to be stored, create an organisation.</u>
           </p>
         </div>
       )}

@@ -14,7 +14,7 @@
 
 @font-face {
     font-family: 'lcSac';
-    src: url("../fonts/lcSac.ttf");
+    src: url("../public/fonts/euclidSemibold.ttf");
 }
 @font-face {
     font-family: 'euclidRegular';
@@ -26,5 +26,5 @@
 }
 @font-face {
     font-family: 'euclidSemibold';
-    src: url("../public/fonts/euclidSemibold.ttf");
+    src: url("../fonts/euclidSemibold.ttf");
 }

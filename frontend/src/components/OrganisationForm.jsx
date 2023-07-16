@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
+import bg from "../assets/Dash.jpg";
 
 const OrganisationForm = () => {
   const navigate = useNavigate();
@@ -70,12 +71,15 @@ const OrganisationForm = () => {
     //     transition={{ delay: 0.5, duration: 2 }}
     // >
     <>
-      <p className="font-lcSac text-qwhite text-8xl p-6 mt-8  text-center">
+      <div className="fixed -z-20 inset-0  flex items-center justify-center">
+        <img src={bg} alt="" />
+      </div>
+      <p className="font-lcSac text-qblack text-8xl p-6 mt-8  text-center">
         <Link to={"/"}>QuoGen</Link>
       </p>
       <div className="flex justify-around">
         <div>
-          <p className="text-center font-lcSac text-2xl text-qwhite m-4">
+          <p className="text-center font-lcSac text-2xl text-qblack m-4">
             Register Your Organisation!
           </p>
           <Formik
@@ -103,16 +107,16 @@ const OrganisationForm = () => {
                   name="orgName"
                   type="text"
                   placeholder="Organisation Name"
-                  className="font-lcSac text-qwhite bg-qblue block mb-4 w-80 h-10 p-2 outline-none border border-qwhite"
+                  className="font-lcSac text-qblack  block mb-4 w-80 h-10 p-2 outline-none "
                 />
                 {errors.orgName && touched.orgName ? (
-                  <div className="text-qwhite font-lcSac">{errors.orgName}</div>
+                  <div className="text-qblack font-lcSac">{errors.orgName}</div>
                 ) : null}
                 <Field
                   name="orgEmail"
                   type="email"
                   placeholder="Organisation Email"
-                  className="font-lcSac text-qwhite bg-qblue block mb-4 w-80 h-10 p-2 outline-none border border-qwhite"
+                  className="font-lcSac text-qblack  block mb-4 w-80 h-10 p-2 outline-none "
                 />
                 {errors.orgEmail && touched.orgEmail ? (
                   <div className="text-qwhite font-lcSac">
@@ -123,10 +127,10 @@ const OrganisationForm = () => {
                   name="orgMobile"
                   type="text"
                   placeholder="Organisation Mobile"
-                  className="font-lcSac text-qwhite bg-qblue block mb-4 w-80 h-10 p-2 outline-none border border-qwhite"
+                  className="font-lcSac text-qwhite block mb-4 w-80 h-10 p-2 outline-none "
                 />
                 {errors.orgMobile && touched.orgMobile ? (
-                  <div className="text-qwhite font-lcSac">
+                  <div className="text-qblack font-lcSac">
                     {errors.orgMobile}
                   </div>
                 ) : null}
@@ -134,16 +138,16 @@ const OrganisationForm = () => {
                   name="orgAbout"
                   type="text"
                   placeholder="About Ex: Software Business, Photography"
-                  className="font-lcSac text-qwhite bg-qblue block mb-4 w-80 h-10 p-2 outline-none border border-qwhite"
+                  className="font-lcSac text-qblack  block mb-4 w-80 h-10 p-2 outline-none "
                 />
                 {errors.orgAbout && touched.orgAbout ? (
-                  <div className="text-qwhite font-lcSac">
+                  <div className="text-qblack font-lcSac">
                     {errors.orgAbout}
                   </div>
                 ) : null}
                 <button
                   type="submit"
-                  className="border border-qwhite w-60 h-10 font-lcSac ml-10 text-qwhite rounded-sm"
+                  className="bg-qblack w-60 h-10 font-lcSac ml-10 text-qwhite rounded-sm"
                 >
                   Submit
                 </button>

@@ -14,6 +14,8 @@ export default {
     colors:{
       'qblue':'#26262e',
       'qwhite':'#fcf8f2',
+      'qblack':'#26262e',
+      'qorange':'#eb5703'
     },
     extend: {
     },
