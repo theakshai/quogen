@@ -13,6 +13,13 @@ import bg from "../assets/Dash.jpg";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  console.log(token);
+  let role = "";
+  const { decodedToken } = useJwt(token);
+  if (decodedToken) {
+    role = decodedToken.role;
+  }
   const [presentInOrg, setPresentInOrg] = useState(false);
 
   useEffect(() => {
@@ -51,14 +58,18 @@ const Dashboard = () => {
       {presentInOrg ? (
         <div className="flex-col justify-around flex-wrap gap-8">
           <Link to="/quotation/all">
-            <DCard img={Quotations} cardName={"Quotation"} />
+            <DCard msg={">>>>>"} cardName={"Quotation"} />
           </Link>
-          <Link to="/organisation">
-            <DCard img={Organisation} cardName={"Organisation"} />
-          </Link>
-          <Link to="/profile">
-            <DCard img={Settings} cardName={"Profile"} />
-          </Link>
+          {role === "admin" ? (
+            <div>
+              <Link to="/organisation">
+                <DCard msg={"<<<<<"} cardName={"Organisation"} />
+              </Link>
+              <Link to="/profile">
+                <DCard msg={">>>>>"} cardName={"Profile"} />
+              </Link>
+            </div>
+          ) : null}
         </div>
       ) : (
         <div>

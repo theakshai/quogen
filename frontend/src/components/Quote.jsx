@@ -15,53 +15,36 @@ const Quote = ({ showModal, closeModal, modaldata, datastatus }) => {
     <div className="fixed inset-0 flex items-center justify-center">
       <div className="fixed inset-0 bg-gray-900 opacity-50"></div>
       {datastatus ? (
-        <div className="bg-qblue p-6 box z-10 border border-qwhite">
+        <div className="bg-qwhite p-6 box z-10 border-2 border-qblack">
           <div className="flex justify-evenly ">
             <div className="border border-qwhite p-4 w-80">
-              <p className=" text-qwhite font-euclidRegular">
-                {modaldata.clientName}
-              </p>
-              <p className=" text-qwhite font-euclidRegular">
+              <p className=" text-qblack font-lcSac">{modaldata.clientName}</p>
+              <p className=" text-qblack font-lcSac">
                 Client Mobile: {modaldata.clientMobile}
               </p>
-              <p className=" text-qwhite font-euclidRegular">
+              <p className=" text-qblack font-lcSac">
                 Client Email: {modaldata.senderEmail}
               </p>
             </div>
             <div className="border border-qwhite p-4 w-80">
-              <p className=" text-qwhite font-euclidRegular">
-                {modaldata.senderName}
-              </p>
-              <p className=" text-qwhite font-euclidRegular">
+              <p className=" text-qblack font-lcSac">{modaldata.senderName}</p>
+              <p className=" text-qblack font-lcSac">
                 Sender Mobile: {modaldata.senderMobile}
               </p>
-              <p className=" text-qwhite font-euclidRegular">
+              <p className=" text-qblack font-lcSac">
                 Sender Email: {modaldata.senderEmail}
               </p>
             </div>
           </div>
-          <div className="border-qwhite w-82 border m-4"></div>
-          <p className=" p-2 text-qwhite font-euclidRegular">
-            <u>About</u>
-          </p>
-          <p className=" text-qwhite font-euclidRegular  p-2">
-            {modaldata.about}
-          </p>
-          <div className="border-qwhite w-82 border m-4"></div>
-          <p className=" p-2 text-qwhite font-euclidRegular ">
+          <div className="border-qblack w-82 border-4 m-4"></div>
+          <p className=" p-2 text-qblack font-lcSac ">
             <u>Service Providing</u>
           </p>
-          <p className=" text-qwhite font-euclidRegular p-2">
-            {modaldata.service}
-          </p>
-          <div className="border-qwhite w-82 border m-4"></div>
-          <p className=" p-2 text-qwhite font-euclidRegular ">
-            <u>Terms & Condition</u>
-          </p>
-          <p className=" text-qwhite font-euclidRegular  p-2">{modaldata.tc}</p>
+          <p className=" text-qblack font-lcSac p-2">{modaldata.service}</p>
+          <div className="border-qwhite w-82 border-4 m-4"></div>
           <div className="flex justify-around">
             <button
-              className="font-lcSac text-qwhite border border-qwhite p-2  w-20"
+              className="font-lcSac text-qblack border border-qblack p-2  w-20"
               onClick={closeModal}
             >
               Close

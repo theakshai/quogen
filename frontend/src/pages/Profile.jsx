@@ -4,6 +4,7 @@ import { Fragment } from "react";
 import { useJwt } from "react-jwt";
 import axios from "axios";
 import SignUpForm from "../components/SignUpForm";
+import UpdateProfile from "../components/UpdateProfile";
 import bg from "../assets/prof.jpg";
 
 const Profile = () => {
@@ -12,6 +13,7 @@ const Profile = () => {
   let userId = "";
   if (decodedToken) {
     userId = decodedToken.UserId;
+    console.log("the user id is " + userId);
   }
 
   const [uProfile, setUProfile] = useState();
@@ -50,7 +52,7 @@ const Profile = () => {
         </p>
       </div>
       <div className="flex justify-around mt-10 ">
-        {uProfile ? <SignUpForm userProfile={uProfile} /> : null}
+        {uProfile ? <UpdateProfile userProfile={uProfile} /> : null}
       </div>
     </Fragment>
   );

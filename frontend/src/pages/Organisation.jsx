@@ -4,6 +4,7 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 import bg from "../assets/organisa.jpg";
+import { LocalConvenienceStoreOutlined } from "@mui/icons-material";
 
 const Organisation = () => {
   const [memberId, setMemberId] = useState("");
@@ -13,10 +14,22 @@ const Organisation = () => {
   const [orgcheck, setorgcheck] = useState(false);
   let token = localStorage.getItem("token");
   let { decodedToken } = useJwt(token);
+  let userId = "";
   let orgId = "";
+  let role = "";
   if (decodedToken) {
+    console.log(decodedToken);
     orgId = decodedToken.OrgId;
+    role = decodedToken.role;
   }
+
+  const revokeUser = (userId) => {
+    const revokeURL = `http://localhost:5146/api/organisation/removeruser/${userId}`;
+    axios
+      .post(revokeURL)
+      .then((response) => console.log(response.data))
+      .catch((error) => console.log(error));
+  };
 
   const handleMemberIdChange = (e) => {
     setMemberId(e.target.value);
@@ -44,8 +57,6 @@ const Organisation = () => {
       })
       .catch((error) => console.log(error));
   };
-
-  orgMemberRequest();
 
   console.log(orgId);
   const url = `http://localhost:5146/api/organisation/${orgId}`;
@@ -108,6 +119,11 @@ const Organisation = () => {
   useEffect(() => {
     request();
   }, [orgcheck]);
+
+  useEffect(() => {
+    console.log(memberdata);
+    orgMemberRequest();
+  }, [orgcheck]);
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -137,7 +153,7 @@ const Organisation = () => {
             value={memberId}
             onChange={handleMemberIdChange}
             placeholder="Add Member"
-            className="font-euclidRegular text-qwhite bg block mb-4 mt-10  w-80 h-10 p-2 outline-none border border-qblack"
+            className="font-euclidRegular text-qblack bg block mb-4 mt-10  w-80 h-10 p-2 outline-none border border-qblack"
           />
           <button
             className="font-euclidRegular text-qwhite bg-qblack block mb-4 mt-10 h-10 p-2 outline-none border border-qwhite "
@@ -163,13 +179,16 @@ const Organisation = () => {
       ) : null}
 
       {memberdata.length > 0 ? (
-        <div>
+        <div className="flex">
           {memberdata.map((o) => (
-            <div key={o.id}>
-              {console.log("This is rendering with id " + o.id)}
-              <h1 className="text-qblack font-lcSac text-2xl">
-                {o.organisationId}
-              </h1>
+            <div
+              key={o.userId}
+              className="text-qwhite flex-col text-center font-lcSac justify-around w-80  bg-qblack p-10 border border-qblack m-4"
+            >
+              <p>
+                {o.lastName},{o.firstName}
+              </p>
+              <p>{o.designation}</p>
             </div>
           ))}
         </div>

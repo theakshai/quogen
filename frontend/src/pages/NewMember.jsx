@@ -4,6 +4,7 @@ import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import bg from "../assets/Home.jpg";
 
 const NewMemberForm = ({ userProfile }) => {
   const navigate = useNavigate();
@@ -52,10 +53,13 @@ const NewMemberForm = ({ userProfile }) => {
       animate={{ opacity: 1 }}
       transition={{ delay: 0.5, duration: 2 }}
     >
-      <p className="text-center font-lcSac text-2xl text-qwhite m-4">
+      <div className="fixed -z-20 inset-0  flex items-center justify-center">
+        <img src={bg} alt="" />
+      </div>
+      <p className="text-center font-lcSac text-2xl text-qblack m-4">
         Welcome to Gleam studios!
       </p>
-      <p className="text-center font-lcSac text-2xl text-qwhite m-4">
+      <p className="text-center font-lcSac text-2xl text-qblack m-4">
         Fill the form below to be a member at Gleam Studios!
       </p>
       <div className="flex justify-around mt-10 ">
@@ -86,7 +90,7 @@ const NewMemberForm = ({ userProfile }) => {
                 name="firstName"
                 type="text"
                 placeholder="First Name"
-                className="font-lcSac text-qwhite bg-qblue block mb-4 w-80 h-10 p-2 outline-none border border-qwhite"
+                className="font-lcSac text-qblack bg-qwhite block mb-4 w-80 h-10 p-2 outline-none border border-qwhite"
               />
               {touched.firstName && errors.firstName ? (
                 <div className="font-lcSac text-qwhite">{errors.firstName}</div>
@@ -95,7 +99,7 @@ const NewMemberForm = ({ userProfile }) => {
                 name="lastName"
                 type="text"
                 placeholder="Last Name"
-                className="font-lcSac text-qwhite bg-qblue block mb-4 w-80 h-10 p-2 outline-none border border-qwhite"
+                className="font-lcSac text-qblack bg-qwhite block mb-4 w-80 h-10 p-2 outline-none border border-qwhite"
               />
               {touched.lastName && errors.lastName ? (
                 <div className="font-lcSac text-qwhite">{errors.lastName}</div>
@@ -104,7 +108,7 @@ const NewMemberForm = ({ userProfile }) => {
                 name="designation"
                 type="text"
                 placeholder="Designation: Ex: Sales Manager, HR etc.,"
-                className="font-lcSac text-qwhite bg-qblue block mb-4 w-80 h-10 p-2 outline-none border border-qwhite"
+                className="font-lcSac text-qblack bg-qwhite block mb-4 w-80 h-10 p-2 outline-none border border-qwhite"
               />
               {touched.designation && errors.designation ? (
                 <div className="font-lcSac text-qwhite">
@@ -115,14 +119,14 @@ const NewMemberForm = ({ userProfile }) => {
                 name="password"
                 type="text"
                 placeholder="Password"
-                className="font-lcSac text-qwhite bg-qblue block mb-4 w-80 h-10 p-2 outline-none border border-qwhite"
+                className="font-lcSac text-qblack bg-qwhite block mb-4 w-80 h-10 p-2 outline-none border border-qwhite"
               />
               {touched.password && errors.password ? (
                 <div className="font-lcSac text-qwhite">{errors.password}</div>
               ) : null}
               <button
                 type="submit"
-                className="border border-qwhite w-60 h-10 font-lcSac ml-10 text-qwhite rounded-sm"
+                className="w-60 h-10 font-lcSac ml-10 text-qwhite bg-qblack rounded-sm"
               >
                 Submit
               </button>

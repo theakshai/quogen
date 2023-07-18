@@ -19,14 +19,14 @@ const Navbar = () => {
         transition={{ delay: 0.5, duration: 1 }}
       >
         <div>
-          <Link to={"/"} className="font-lcSac text-qwhite text-2xl sm:text-xl">
+          <Link to={"/"} className="font-lcSac text-qblack text-2xl sm:text-xl">
             QG
           </Link>
         </div>
         <div className=" sm:flex">
           {token ? (
             <li
-              className="list-none px-4 font-lcSac text-qwhite cursor-pointer"
+              className="list-none px-2 font-lcSac text-qblack text-xl cursor-pointer"
               onClick={handlesubmit}
             >
               Logout

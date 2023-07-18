@@ -16,9 +16,11 @@ import { Link, Navigate, json, useNavigate, useParams } from "react-router-dom";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import bg from "../assets/client.jpg";
+import Swal from "sweetalert2";
 
 const QuotationForms = ({}) => {
   const pdfpayload = "";
+  const [pdfload, setpdfload] = useState(false);
   const { quotationId } = useParams();
   const [dform, setdform] = useState();
   const url = `http://localhost:5146/api/quotation/${quotationId}`;
@@ -91,6 +93,7 @@ const QuotationForms = ({}) => {
   });
 
   const handlepdf = () => {
+    setpdfload(true);
     const element = document.getElementById("pdf-content");
     html2canvas(element).then((canvas) => {
       const pdf = new jsPDF("p", "mm", "a4");
@@ -98,26 +101,45 @@ const QuotationForms = ({}) => {
       pdf.addImage(imgData, "PNG", 0, 0, 210, 297);
       pdf.save(`${formik.values.clientName}.pdf`);
       const pdfBlob = pdf.output("blob");
-      const convertBlobToDataURL = (blob) => {
-        return new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onloadend = () => resolve(reader.result);
-          reader.onerror = reject;
-          reader.readAsDataURL(blob);
-        });
-      };
 
-      // Convert Blob to Data URL and handle the result
-      convertBlobToDataURL(pdfBlob)
-        .then((pdfData) => {
-          // Print the value of pdfData for debugging
-          console.log(pdfData);
+      const formData = new FormData();
+      formData.append("pdfFile", pdfBlob, "document.pdf");
 
-          // Do whatever you want with the pdfData
+      axios
+        .post("http://localhost:5146/api/quotation/sendpdf", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         })
-        .catch((error) => {
-          // Handle any errors
-        });
+        .then((response) => {
+          setpdfload(false);
+          Swal.fire({
+            title: "Email has been succesfully sent",
+            color: "#fcf8f2",
+            background: "#26262e",
+            icon: "success",
+            border: "#fcf8f2",
+            confirmButtonText: "Ok",
+          });
+          console.log("pdf sent successfully");
+        })
+        .catch((error) => console.log(error));
+
+      // const convertBlobToDataURL = (blob) => {
+      //   return new Promise((resolve, reject) => {
+      //     const reader = new FileReader();
+      //     reader.onloadend = () => resolve(reader.result);
+      //     reader.onerror = reject;
+      //     reader.readAsDataURL(blob);
+      //   });
+      // };
+
+      // convertBlobToDataURL(pdfBlob)
+      //   .then((pdfData) => {
+      //    console.log(pdfData);
+      //   })
+      //   .catch((error) => {
+      //   });
     });
   };
   const instance = axios.create();
@@ -477,13 +499,18 @@ const QuotationForms = ({}) => {
             </div>
           </motion.div>
           //{" "}
-          <div className="flex justify-center">
+          <div className="flex justify-center gap-4">
             <button
               className="border border-qwhite p-2 text-qwhite font-lcSac text-xl "
               onClick={handlepdf}
             >
               // Generate PDF //{" "}
             </button>
+            {pdfload ? (
+              <div className="text-lcSac text-qwhite text-xl">
+                Sending mail to the client...........
+              </div>
+            ) : null}
           </div>
         </div>
       )}

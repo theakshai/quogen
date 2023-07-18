@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Quote from "../components/Quote";
 import Search from "../components/Search";
 import quote from "../assets/Quota.jpg";
+import { useJwt } from "react-jwt";
 
 const UsersQuotation = () => {
   const navigate = useNavigate();
@@ -39,6 +40,27 @@ const UsersQuotation = () => {
     setQuery(e.target.value);
   };
 
+  let token = localStorage.getItem("token");
+  let userId = "";
+  let role = "";
+  let { decodedToken } = useJwt(token);
+  if (decodedToken) {
+    userId = decodedToken.UserId;
+    role = decodedToken.role;
+  }
+  const url = `http://localhost:5146/api/quotation/user/${userId}`;
+  console.log(url);
+
+  const request = () => {
+    axios
+      .get(url)
+      .then((response) => {
+        console.log("the original data");
+        console.log(response.data);
+      })
+      .catch((error) => console.log(error));
+  };
+
   useEffect(() => {
     axios.get("http://localhost:5146/api/quotation").then((response) => {
       setQuotation(response.data);
@@ -60,7 +82,7 @@ const UsersQuotation = () => {
   };
 
   const handleQuotationClick = (quotationId) => {
-    navigate(`/quotation/${quotationId}`);
+    navigate("/quotation/all");
   };
   const handlesubmit = () => {
     localStorage.removeItem("token");
@@ -101,25 +123,18 @@ const UsersQuotation = () => {
         <div className="fixed -z-20 inset-0  flex items-center justify-center">
           <img src={quote} alt="" />
         </div>
-        <h1 className="text-qblack text-center font-lcSac border border-qblack p-2 w-80  text-xl m-10">
+        <h1 className="text-qwhite text-center font-lcSac border bg-qblack border-qblack p-2 w-80  text-xl m-10">
           Total Quotations Generated: {quotation.length}
         </h1>
         <div>
           <button
-            type="button"
-            className="text-xl p-2 m-10 border border-qblack font-lcSac text-qblack"
-            onClick={openSearch}
-          >
-            Search
-          </button>
-          <button
-            className="text-xl p-2 m-10 border border-qblack font-lcSac text-qblack"
+            className="text-xl p-2 m-10 border border-qblack bg-qblack font-lcSac text-qwhite"
             onClick={() => navigate("/quotation/")}
           >
             Create New +{" "}
           </button>
           <button
-            className="text-xl p-2 m-10 border border-qblack font-lcSac text-qblack"
+            className="text-xl p-2 m-10 border border-qblack bg-qblack font-lcSac text-qwhite"
             onClick={() => navigate("/quotation/converted")}
           >
             Converted
@@ -137,11 +152,11 @@ const UsersQuotation = () => {
             {quotation.map((qu) => (
               <div
                 key={qu.quotationId}
-                className="text-qblack flex-col text-center font-lcSac justify-around w-80  p-10 border border-qblack m-4"
+                className="text-qwhite flex-col text-center font-lcSac justify-around w-80  bg-qblack p-10 border border-qblack m-4"
               >
                 <p className=" text-center text-4xl m-2">{qu.clientName}</p>
                 <div className="flex justify-center gap-4">
-                  {qu.confirmed === false ? (
+                  {qu.confirmed === false && role === "admin" ? (
                     <button
                       className="cursor-pointer border border-qblack h-10 p-2 font-euclidRegular"
                       onClick={() => handleConvert(qu.quotationId)}
