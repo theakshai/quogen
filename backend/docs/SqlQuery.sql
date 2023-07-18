@@ -104,3 +104,4 @@ drop table Quotations
 select * from TempTables
 select * from Quotations
 select * from TempTables
+select * from UserOrganisationMappings

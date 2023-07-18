@@ -296,7 +296,7 @@ namespace backend.Controllers
                     }
 
                 }
-                return _response.NotFound("User Not Found");
+                return _response.InternalServerError();
             }
                 return _response.NotFound("User Not Found");
         }

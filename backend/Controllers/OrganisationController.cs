@@ -426,12 +426,6 @@ If you have any questions or need further information, please feel free to reach
             return StatusCode(409, "Unable to delete Organisation");
         }
 
-        [HttpDelete]
-        [Route("/api/organisation/removeuser/{id}")]
-        public async Task<IActionResult> RemoveUser()
-        {
-            return StatusCode(409, "Not able to remove user from the organisation . See logs for more details");
-        }
 
         [HttpGet]
         [Route("/api/organisation/{id}/users")]
@@ -457,6 +451,29 @@ If you have any questions or need further information, please feel free to reach
             }
 
             return StatusCode(409, "Unable to get the  Organisation Users");
+        }
+
+        [HttpPost("/api/organisation/removeuser/{userId}")]
+
+        public async Task<IActionResult> RemOrgUse(string userId)
+        {
+            if(userId is not null)
+            {
+                try
+                {
+                    var user =  await _context.UserOrganisationMappings.FirstOrDefaultAsync(u => u.UserId == userId);
+                    if(user is not null)
+                    {
+                        _context.UserOrganisationMappings.Remove(user);
+                        return Ok("Access revoked successfully");
+
+                    }
+                }catch(Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+            return _response.InternalServerError();
         }
 
     }

@@ -348,10 +348,12 @@ If you have any questions or need further information, please feel free to reach
             {
                 message.From = new MailAddress("123004015@sastra.ac.in");
                 message.To.Add(new MailAddress("akshaiakshai35@gmail.com"));
-                message.Subject = "PDF Attachment";
+                message.Subject = "Gleam Studios: Your Quotation has been ready";
+                string htmlBody = "Hi there, Below you can verify your quotation and get the invoice from our office!";
+                message.Body = htmlBody;
 
                 // Create the PDF attachment
-                var attachment = new Attachment(new MemoryStream(pdfData), "document.pdf", "application/pdf");
+                var attachment = new Attachment(new MemoryStream(pdfData), "Quotation.pdf", "application/pdf");
                 message.Attachments.Add(attachment);
 
                 // Send the email using SMTP
